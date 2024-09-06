@@ -1,4 +1,6 @@
+using Core.Models;
 using Microsoft.AspNetCore.Mvc;
+using Services.Users;
 
 namespace StackOverflow.API.Controllers
 {
@@ -6,6 +8,9 @@ namespace StackOverflow.API.Controllers
      [Route("[controller]")]
      public class WeatherForecastController : ControllerBase
      {
+          private readonly IUserService _usersService;
+
+     
           private static readonly string[] Summaries = new[]
           {
              "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -13,13 +18,14 @@ namespace StackOverflow.API.Controllers
 
           private readonly ILogger<WeatherForecastController> _logger;
 
-          public WeatherForecastController(ILogger<WeatherForecastController> logger)
+          public WeatherForecastController(ILogger<WeatherForecastController> logger, IUserService userService)
           {
                _logger = logger;
+               _usersService = userService;
           }
 
           [HttpGet(Name = "GetWeatherForecast")]
-          public IEnumerable<WeatherForecast> Get()
+          public IEnumerable<WeatherForecast> Get([FromRoute] int test)
           {
                return Enumerable.Range(1, 5).Select(index => new WeatherForecast
                {
@@ -28,6 +34,19 @@ namespace StackOverflow.API.Controllers
                     Summary = Summaries[Random.Shared.Next(Summaries.Length)]
                })
                .ToArray();
+          }
+
+          [HttpGet("testing/{id}")]
+          public UserModel Test([FromRoute] string id, [FromQuery] int age)
+          {
+
+               return _usersService.create(age);
+          }
+
+          [HttpPost("testing")]
+          public int TestJson([FromBody] UserModel user)
+          {
+               return user.Id;
           }
      }
 }
