@@ -19,6 +19,8 @@ using DataBase.Repositories;
 
 namespace Services.Users
 {
+     
+
      public interface IUserService
      {
           UserModel create(int age);
@@ -39,12 +41,20 @@ namespace Services.Users
 
      public class UsersService2 : IUserService
      {
-          public UsersService2(UsersRepository usersRepository) { }
+          private readonly UsersRepository _usersRepository;
+
+          public UsersService2(UsersRepository usersRepository)
+          {
+               _usersRepository = usersRepository;
+          }
           public UserModel create(int age)
           {
                var user = new UserModel();
                user.Name = (age + 3).ToString();
                user.Id = age + 2;
+
+
+               var users = _usersRepository.CreateUser(user);
 
                // TODO : DB LOGIC
                return user;
