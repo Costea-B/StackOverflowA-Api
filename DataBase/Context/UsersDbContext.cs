@@ -7,7 +7,7 @@ namespace DataBase.Context
      {
           public UsersDbContext(DbContextOptions options) : base(options){}
 
-          public  DbSet<UsersDbTables> Users { get; set; }
+          public  DbSet<UsersDbTables> UserDbTables { get; set; }
 
 
      }

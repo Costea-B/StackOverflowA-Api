@@ -1,6 +1,8 @@
 using DataBase.Context;
 using DataBase.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Services.Abstractions;
 using Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,8 +18,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<UsersRepository>();
-builder.Services.AddScoped<IUserService, UsersService2>();
+builder.Services.AddScoped<IUsersServices, UsersServices>();
 builder.Services.AddScoped<UsersRepository>();
+builder.Services.AddScoped<PasswordHash>();
+builder.Services.AddScoped<IPasswordHash, PasswordHash>();
+builder.Services.AddScoped<JwtProvid>();
 
 
 var app = builder.Build();

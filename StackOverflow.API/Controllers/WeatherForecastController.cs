@@ -1,5 +1,6 @@
 using Core.Models;
 using Microsoft.AspNetCore.Mvc;
+using Services.Abstractions;
 using Services.Users;
 
 namespace StackOverflow.API.Controllers
@@ -8,7 +9,7 @@ namespace StackOverflow.API.Controllers
      [Route("[controller]")]
      public class WeatherForecastController : ControllerBase
      {
-          private readonly IUserService _usersService;
+          private readonly IUsersServices _usersService;
 
      
           private static readonly string[] Summaries = new[]
@@ -18,7 +19,7 @@ namespace StackOverflow.API.Controllers
 
           private readonly ILogger<WeatherForecastController> _logger;
 
-          public WeatherForecastController(ILogger<WeatherForecastController> logger, IUserService userService)
+          public WeatherForecastController(ILogger<WeatherForecastController> logger, IUsersServices userService)
           {
                _logger = logger;
                _usersService = userService;
@@ -39,8 +40,8 @@ namespace StackOverflow.API.Controllers
           [HttpGet("testing/{id}")]
           public UserModel Test([FromRoute] string id, [FromQuery] int age)
           {
-
-               return _usersService.create(age);
+               var user = new UserModel(age, id, id, id);
+               return _usersService.CreateNewUsers(user);
           }
 
           [HttpPost("testing")]

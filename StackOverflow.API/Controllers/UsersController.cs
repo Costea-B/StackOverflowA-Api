@@ -1,40 +1,44 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Services.Abstractions;
+using Services.Users;
 
 namespace StackOverflow.API.Controllers
 {
-    //this class will be replaced
-    public class Usr
-    {
-        public required int Id { get; set; }
-        public required string Name { get; set; }
-        public required string Password { get; set; }
-    }
-
-
+  
     [Route("api/[controller]")]
     [ApiController]
     //[ProducesResponseType(StatusCodes.Status201Created)]
     public class UsersController : ControllerBase
     {
+         private readonly IUsersServices _userService;
+
+
+         public UsersController(IUsersServices userService)
+         {
+              _userService = userService;
+         }
+
         [HttpPost("Create")]
-        public IActionResult Create(Usr user)
+        public IActionResult Create(UserModel user)
         {
             // TODO: add actual function calls
-            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
+            return CreatedAtAction(nameof(LoginUser), new { id = user.Id }, user);
         }
 
-        [HttpGet("GetById/{id}")]
-        public IActionResult GetById(int id)
+        [HttpGet("LoginUser/{id}")]
+        public UserModel LoginUser( int id, string name, string password)
         {
-            var user = new Usr() { Id = id, Name = "foo", Password = "bar" };
-            return new ObjectResult(user);
+             var user = new UserModel( id, name, "joric",password );
+            return _userService.LoginUsers(user);
         }
+
 
         [AllowAnonymous]
         [HttpPost("Login")]
-        public IActionResult Login(Usr user)
+        public IActionResult Login(UserModel user)
         {
             IActionResult response = Unauthorized();
 
