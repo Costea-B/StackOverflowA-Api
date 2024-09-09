@@ -27,17 +27,25 @@ builder.Services.AddScoped<JwtProvid>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
      app.UseSwagger();
      app.UseSwaggerUI();
 }
 
+app.UseMiddleware<JwtMiddleware>();
+
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
+
