@@ -9,11 +9,10 @@ using DataBase.Context;
 
 namespace DataBase.Repositories
 {
-     public class UsersRepository
+     public class UsersRepository 
      {
 
           private readonly UsersDbContext _dbContext;
-
           
           public UsersRepository(UsersDbContext dbContext)
           {
@@ -21,21 +20,25 @@ namespace DataBase.Repositories
           }
           public UserModel CreateUser(UserModel user)
           {
-              
 
-               UsersDbTables newUser = new UsersDbTables()
-               {
-                    Id = user.Id,
-                    Name = user.Name,
-                    Email = "Joric",
-                    Password = "Joric"
-                    
-               };
-               _dbContext.Users.Add(newUser);
+               var newUser = new UsersDbTables(user.Name, user.Password, user.Email);
+               
+               _dbContext.UserDbTables.Add(newUser);
                _dbContext.SaveChanges();
                
 
                return user;
+          }
+
+          public UserModel LoginUsers(UserModel user)
+          {
+               var auth =  _dbContext.UserDbTables.FirstOrDefault(x => x.Name == user.Name );
+               if (auth != null)
+               {
+                    var users = new UserModel(auth.Id, auth.Name, auth.Email, auth.Password);
+                    return users;
+               }
+               return null;
           }
      }
 }
