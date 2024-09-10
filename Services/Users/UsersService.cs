@@ -37,14 +37,12 @@ namespace Services.Users
           public UserModel LoginUsers(UserModel user)
           {
                var userLogin = _usersRepository.LoginUsers(user);
-
                var result = _passwordHash.Verify(password: user.Password, hashPassword: userLogin.Password);
                if (result)
                {
-                    _jwtProvid.GenerateJwtToken(userLogin);
+                    return userLogin;
                }
-
-               return userLogin;
+               return null;
           }
      }
 
