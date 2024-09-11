@@ -1,5 +1,6 @@
 ﻿using Core.DbModels;
 using Core.Models;
+using Core.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace Services.Abstractions
         Task<ReplyDbTables> GetReplyByIdAsync(int id);
         Task<List<ReplyDbTables>> GetRepliesForToticAsync(int topicId);
         Task<ReplyDbTables> UpdateReplyAsync(int replyId, string newDescription);
-
+        Task<ReplyDbTables> CreateReplyToReplyAsync(int parentReplyId, CreateReplyRequest request);
+        Task<List<ReplyViewModel>> GetRepliesForTopicAsync(int topicId);
+        Task DeleteReplyAsync(int replyId);
     }
 }

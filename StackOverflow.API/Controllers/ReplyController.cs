@@ -48,6 +48,26 @@ namespace StackOverflow.API.Controllers
             return CreatedAtAction(nameof(GetReplyById), new { id = newReply.Id }, newReply);
         }
 
+        // Creeaza un reply copil
+        [HttpPost("{parentReplyId}/reply")]
+        public async Task<IActionResult> CreateChildReply(int parentReplyId, [FromBody] CreateReplyRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var newReply = await _replyService.CreateReplyToReplyAsync(parentReplyId, request);
+                return CreatedAtAction(nameof(GetReplyById), new { id = newReply.Id }, newReply);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+
         // Editeaza un reply existent / adauga end-point
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateReply(int id, [FromBody] string newDescription)
@@ -58,6 +78,20 @@ namespace StackOverflow.API.Controllers
                 return NotFound();
             }
             return Ok(newReply);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteReply(int id)
+        {
+            try
+            {
+                await _replyService.DeleteReplyAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
     }
 }

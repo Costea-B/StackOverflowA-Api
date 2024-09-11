@@ -16,15 +16,17 @@ namespace Core.DbModels
             AuthorId = authorId;
             Description = description;
             TopicId = topicId;
+            CreatedAt = DateTime.Now;
         }
 
-        /*public ReplyDbTables(int authorId, string description, DateTime createdAt, int topicId)
+        public ReplyDbTables(int authorId, string description, int topicId, int? parentReplyId)
         {
             AuthorId = authorId;
             Description = description;
-            CreatedAt = createdAt;
             TopicId = topicId;
-        }*/
+            ParentReplyId = parentReplyId;
+            CreatedAt = DateTime.Now;
+        }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -39,5 +41,11 @@ namespace Core.DbModels
         [Required]
         public int TopicId { get; set; }
         public TopicDbTables Topic { get; set; }
+
+
+        // Experimente
+        public int? ParentReplyId { get; set; }
+        public ReplyDbTables ParentReply { get; set; }
+        public ICollection<ReplyDbTables> ChildReplies { get; set; }
     }
 }

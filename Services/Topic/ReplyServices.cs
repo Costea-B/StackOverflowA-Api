@@ -1,5 +1,6 @@
 ﻿using Core.DbModels;
 using Core.Models;
+using Core.ViewModel;
 using DataBase.Repositories;
 using Services.Abstractions;
 using System;
@@ -38,7 +39,22 @@ namespace Services.Topic
 
         public async Task<ReplyDbTables> UpdateReplyAsync(int replyId, string newDescription)
         {
-            return await UpdateReplyAsync(replyId, newDescription);
+            return await _replyRepository.UpdateAsync(replyId, newDescription);
+        }
+
+        public async Task<ReplyDbTables> CreateReplyToReplyAsync(int parentReplyId, CreateReplyRequest request)
+        {
+            return await _replyRepository.CreateToReplyAsync(parentReplyId, request);
+        }
+
+        public async Task<List<ReplyViewModel>> GetRepliesForTopicAsync(int topicId)
+        {
+            return await _replyRepository.GetRepliesAsync(topicId);
+        }
+
+        public async Task DeleteReplyAsync(int replyId)
+        {
+            await _replyRepository.DeleteAsync(replyId);
         }
     }
 }
