@@ -11,16 +11,17 @@ namespace DataBase.Repositories
 {
     public class TopicRepository : ITopicRepository
     {
-        private readonly DataContext _context;
+        private readonly AppDbContext _context;
 
-        public TopicRepository(DataContext context)
+        public TopicRepository(AppDbContext context)
         {
             _context = context;
         }
 
         public async Task<TopicDbTables> GetByIdAsync(int id)
         {
-            var topic = await _context.Topics.FindAsync(id);
+             await _context.Database.MigrateAsync();
+               var topic = await _context.TopicDbTables.FindAsync(id);
 
             if (topic == null)
             {
@@ -33,12 +34,12 @@ namespace DataBase.Repositories
 
         public async Task<List<TopicDbTables>> GetAllAsync()
         {
-            return await _context.Topics.ToListAsync();
+            return await _context.TopicDbTables.ToListAsync();
         }
 
         public async Task AddAsync(TopicDbTables topic)
         {
-            _context.Topics.Add(topic);
+            _context.TopicDbTables.Add(topic);
             await _context.SaveChangesAsync();
         }
     }
