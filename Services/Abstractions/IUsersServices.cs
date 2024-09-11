@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Models;
+﻿using Core.Models;
+using Core.Models.Requests;
+using Core.ViewModel;
 
 namespace Services.Abstractions
 {
-     public interface IUsersServices
+    public interface IUsersServices
      {
-          UserModel LoginUsers(UserModel users);
-          UserModel CreateNewUsers(UserModel users);
+          UserModel LoginUser(UserModel users);
+          Task<RegisterViewModel> Register(UserRegRequest user);
      }
 }

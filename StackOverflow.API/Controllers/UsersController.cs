@@ -1,4 +1,5 @@
 ﻿using Core.Models;
+using Core.Models.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,17 @@ using Services.Users;
 namespace StackOverflow.API.Controllers
 {
   
+    /*
+     * eu si costea avem diferite taburi/spaceuri
+     * dbcontext trebu injectat? (in cazu ista ar trebui un singur repo si nare sens)
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+
+
     [Route("api/[controller]")]
     [ApiController]
     //[ProducesResponseType(StatusCodes.Status201Created)]
@@ -21,19 +33,23 @@ namespace StackOverflow.API.Controllers
               _userService = userService;
          }
 
-        [HttpPost("Create")]
-        public IActionResult Create(UserModel user)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(UserRegRequest user)
         {
-            // TODO: add actual function calls
-            return CreatedAtAction(nameof(LoginUser), new { id = user.Id }, user);
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+            // TODO: add custom validators
+
+            var response = await _userService.Register(user);
+            
+            return Ok(response);
         }
 
-        [HttpGet("LoginUser/{id}")]
-        public UserModel LoginUser( int id, string name, string password)
-        {
-             var user = new UserModel( id, name, "joric",password );
-            return _userService.LoginUsers(user);
-        }
+        //[HttpGet("LoginUser/{id}")]
+        //public UserModel LoginUser(int id, string name, string password)
+        //{
+        //    var user = new UserModel(id, name, "joric", password);
+        //    return _userService.LoginUser(user);
+        //}
 
 
         [AllowAnonymous]

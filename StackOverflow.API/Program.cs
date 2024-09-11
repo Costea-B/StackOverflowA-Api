@@ -15,7 +15,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<UsersDbContext>(opt => opt.UseSqlServer(builder.Configuration["ConnectionStrings:Underflow"]));
+
 
 builder.Services.AddScoped<UsersRepository>();
 builder.Services.AddScoped<IUsersServices, UsersServices>();
@@ -34,7 +36,7 @@ if (app.Environment.IsDevelopment())
      app.UseSwaggerUI();
 }
 
-app.UseMiddleware<JwtMiddleware>();
+//app.UseMiddleware<JwtMiddleware>();
 
 app.UseHttpsRedirection();
 

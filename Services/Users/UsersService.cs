@@ -1,4 +1,6 @@
 ﻿using Core.Models;
+using Core.Models.Requests;
+using Core.ViewModel;
 using DataBase.Repositories;
 using Services.Abstractions;
 
@@ -27,14 +29,14 @@ namespace Services.Users
                _passwordHash = passwordHash;
                _jwtProvid = jwtProvid;
           }
-          public UserModel CreateNewUsers(UserModel user)
+          public Task<RegisterViewModel> Register(UserRegRequest user)
           {
                user.Password = _passwordHash.Generate(user.Password);
-               var userLogin = _usersRepository.CreateUser(user);
-               return userLogin;
+               var userReg = _usersRepository.Register(user);
+               return userReg;
           }
 
-          public UserModel LoginUsers(UserModel user)
+          public UserModel LoginUser(UserModel user)
           {
                var userLogin = _usersRepository.LoginUsers(user);
                var result = _passwordHash.Verify(password: user.Password, hashPassword: userLogin.Password);

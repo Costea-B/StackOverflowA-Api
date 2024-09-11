@@ -1,33 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.DbModels;
+﻿using Core.DbModels;
 using Core.Models;
+using Core.Models.Requests;
+using Core.ViewModel;
 using DataBase.Context;
 
 namespace DataBase.Repositories
 {
-     public class UsersRepository 
+    public class UsersRepository 
      {
-
           private readonly UsersDbContext _dbContext;
           
           public UsersRepository(UsersDbContext dbContext)
           {
                _dbContext = dbContext;
           }
-          public UserModel CreateUser(UserModel user)
+
+          public async Task<RegisterViewModel> Register(UserRegRequest user)
           {
+               var newUser = new UsersDbTables(user.FullName, user.Password, user.Email);
 
-               var newUser = new UsersDbTables(user.Name, user.Password, user.Email);
-               
-               _dbContext.UserDbTables.Add(newUser);
-               _dbContext.SaveChanges();
-               
+            await _dbContext.UserDbTables.AddAsync(newUser);
+            await _dbContext.SaveChangesAsync();
 
-               return user;
+            return new RegisterViewModel { Id = newUser.Id};
           }
 
           public UserModel LoginUsers(UserModel user)
