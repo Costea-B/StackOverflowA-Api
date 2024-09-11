@@ -18,16 +18,23 @@ namespace DataBase.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configurarea relațiilor între entități (ex. Topic - Reply)
+            // Configurarea relațiilor între entități
+
+            // Configurarea relației între Reply și Topic
             modelBuilder.Entity<ReplyDbTables>()
                 .HasOne(r => r.Topic)
                 .WithMany(t => t.Replies)
-                .HasForeignKey(r => r.TopicId);
+                .HasForeignKey(r => r.TopicId)
+                .OnDelete(DeleteBehavior.Cascade); // Opțional: Ștergerea unui Topic șterge și Replies asociate
 
+            // Configurarea relației între Reply și User
             modelBuilder.Entity<ReplyDbTables>()
                 .HasOne(r => r.Author)
                 .WithMany(u => u.Replies)
-                .HasForeignKey(r => r.AuthorId);
+                .HasForeignKey(r => r.AuthorId)
+                .OnDelete(DeleteBehavior.Cascade); // Opțional: Ștergerea unui User șterge și Replies asociate
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

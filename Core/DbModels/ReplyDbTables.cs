@@ -31,6 +31,7 @@ namespace Core.DbModels
         public int Id { get; set; }
         [Required]
         public int AuthorId { get; set; }
+        public UsersDbTables Author { get; set; }
         [Required]
         [StringLength(500)]
         public string Description { get; set; }
@@ -38,6 +39,5 @@ namespace Core.DbModels
         [Required]
         public int TopicId { get; set; }
         public TopicDbTables Topic { get; set; }
-        public UsersDbTables Users { get; set; }
     }
 }

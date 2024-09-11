@@ -30,5 +30,7 @@ namespace Core.DbModels
           [Required]
           public string Email { get; set; }
 
-     }
+        public ICollection<ReplyDbTables> Replies { get; set; }
+
+    }
 }
