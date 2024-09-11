@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core.DbModels;
+using Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,12 @@ using System.Threading.Tasks;
 
 namespace Services.Abstractions
 {
-    internal class IReplyService
+    public interface IReplyService
     {
+        Task<ReplyDbTables> CreateReplyAsync(CreateReplyRequest request);
+        Task<ReplyDbTables> GetReplyByIdAsync(int id);
+        Task<List<ReplyDbTables>> GetRepliesForToticAsync(int topicId);
+        Task<ReplyDbTables> UpdateReplyAsync(int replyId, string newDescription);
+
     }
 }
