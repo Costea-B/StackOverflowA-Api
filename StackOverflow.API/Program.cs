@@ -15,14 +15,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<UsersRepository>();
 builder.Services.AddScoped<IUsersServices, UsersServices>();
 builder.Services.AddScoped<UsersRepository>();
-builder.Services.AddScoped<PasswordHash>();
-builder.Services.AddScoped<IPasswordHash, PasswordHash>();
-builder.Services.AddScoped<JwtProvid>();
+builder.Services.AddScoped<TopicService>();
+builder.Services.AddScoped<ITopicService, TopicService>();
+builder.Services.AddScoped<TopicRepository>();
+builder.Services.AddScoped<ITopicRepository, TopicRepository>();
 
 
 var app = builder.Build();
@@ -34,7 +35,7 @@ if (app.Environment.IsDevelopment())
      app.UseSwaggerUI();
 }
 
-app.UseMiddleware<JwtMiddleware>();
+
 
 app.UseHttpsRedirection();
 

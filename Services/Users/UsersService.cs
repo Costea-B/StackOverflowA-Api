@@ -18,18 +18,18 @@ namespace Services.Users
      public class UsersServices : IUsersServices
      {
           private readonly UsersRepository _usersRepository;
-          private readonly IPasswordHash _passwordHash;
-          private readonly JwtProvid _jwtProvid;
+          
+         
 
-          public UsersServices(UsersRepository usersRepository, IPasswordHash passwordHash, JwtProvid jwtProvid)
+          public UsersServices(UsersRepository usersRepository )
           {
                _usersRepository = usersRepository;
-               _passwordHash = passwordHash;
-               _jwtProvid = jwtProvid;
+               
+               
           }
           public UserModel CreateNewUsers(UserModel user)
           {
-               user.Password = _passwordHash.Generate(user.Password);
+               
                var userLogin = _usersRepository.CreateUser(user);
                return userLogin;
           }
@@ -37,12 +37,10 @@ namespace Services.Users
           public UserModel LoginUsers(UserModel user)
           {
                var userLogin = _usersRepository.LoginUsers(user);
-               var result = _passwordHash.Verify(password: user.Password, hashPassword: userLogin.Password);
-               if (result)
-               {
+               
                     return userLogin;
-               }
-               return null;
+               
+               
           }
      }
 

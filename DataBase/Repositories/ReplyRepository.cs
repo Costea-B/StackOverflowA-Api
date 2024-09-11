@@ -49,6 +49,7 @@ namespace DataBase.Repositories
 
         public async Task<ReplyDbTables> GetByIdAsync(int id)
         {
+             await _context.Database.MigrateAsync();
             var reply = await _context.ReplyDbTables.FindAsync(id);
             if (reply == null)
             {

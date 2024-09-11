@@ -12,9 +12,9 @@ namespace DataBase.Repositories
      public class UsersRepository 
      {
 
-          private readonly UsersDbContext _dbContext;
+          private readonly AppDbContext _dbContext;
           
-          public UsersRepository(UsersDbContext dbContext)
+          public UsersRepository(AppDbContext dbContext)
           {
                _dbContext = dbContext;
           }
