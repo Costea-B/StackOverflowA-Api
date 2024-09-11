@@ -11,16 +11,20 @@ namespace Core.DbModels
 {
     public class ReplyDbTables
     {
+        public ReplyDbTables(int authorId, string description, int topicId)
+        {
+            AuthorId = authorId;
+            Description = description;
+            TopicId = topicId;
+        }
 
-        public ReplyDbTables(int authorId, string description, DateTime createdAt, int topicId, TopicDbTables topic, UsersDbTables users)
+        /*public ReplyDbTables(int authorId, string description, DateTime createdAt, int topicId)
         {
             AuthorId = authorId;
             Description = description;
             CreatedAt = createdAt;
             TopicId = topicId;
-            Topic = topic;
-            Users = users;
-        }
+        }*/
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,7 +32,7 @@ namespace Core.DbModels
         [Required]
         public int AuthorId { get; set; }
         [Required]
-        [StringLength(300)]
+        [StringLength(500)]
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         [Required]

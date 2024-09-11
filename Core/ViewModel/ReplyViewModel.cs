@@ -12,9 +12,8 @@ namespace Core.ViewModel
         public int Id { get; set; }
         public int AuthorId { get; set; }
         public string Description { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } 
         public int TopicId { get; set; }
-        public TopicModel Topic { get; set; }
-        public UserModel User { get; set; }
+        public string AuthorName { get; set; }
     }
 }

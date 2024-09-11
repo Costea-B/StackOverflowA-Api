@@ -9,15 +9,12 @@ namespace Core.Models
     public class ReplyModel
     {
 
-        public ReplyModel(int id, int authorId, string description, DateTime createdAt, int topicId, TopicModel topic, UserModel user)
+        public ReplyModel(int authorId, string description, DateTime createdAt, int topicId)
         {
-            Id = id;
             AuthorId = authorId;
             Description = description;
             CreatedAt = createdAt;
             TopicId = topicId;
-            Topic = topic;
-            User = user;
         }
 
         public int Id { get; set; }
