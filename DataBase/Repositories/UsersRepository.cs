@@ -8,7 +8,7 @@ namespace DataBase.Repositories
 {
     public class UsersRepository 
      {
-          private readonly UsersDbContext _dbContext;
+          private readonly AppDbContext _dbContext;
           
           public UsersRepository(AppDbContext dbContext)
           {

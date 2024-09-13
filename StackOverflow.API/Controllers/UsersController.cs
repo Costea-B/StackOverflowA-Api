@@ -57,7 +57,7 @@ namespace StackOverflow.API.Controllers
         public IActionResult Login([FromQuery] string email, string password)
         {
              UserModel user = new UserModel(0, email, email, password);
-             var users = _userService.LoginUsers(user);
+             var users = _userService.LoginUser(user);
              if (users != null)
              {
                   return Ok();

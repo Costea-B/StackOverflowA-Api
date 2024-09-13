@@ -32,7 +32,7 @@ namespace Services.Users
           public Task<RegisterViewModel> Register(UserRegRequest user)
           {
                
-               var userLogin = _usersRepository.CreateUser(user);
+               var userLogin = _usersRepository.Register(user);
                return userLogin;
           }
 
