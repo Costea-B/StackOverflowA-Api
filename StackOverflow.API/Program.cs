@@ -25,6 +25,18 @@ builder.Services.AddScoped<ITopicService, TopicService>();
 builder.Services.AddScoped<TopicRepository>();
 builder.Services.AddScoped<ITopicRepository, TopicRepository>();
 
+builder.Services.AddCors(option =>
+{
+     option.AddPolicy("Policy", builder =>
+     {
+          builder
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+     });
+});
+
+
 
 var app = builder.Build();
 
@@ -39,11 +51,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("Policy");
 app.UseRouting();
 
 app.UseAuthentication();
 
-app.UseAuthorization();
+
 
 app.MapControllers();
 

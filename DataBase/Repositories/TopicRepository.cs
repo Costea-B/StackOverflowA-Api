@@ -20,7 +20,7 @@ namespace DataBase.Repositories
 
         public async Task<TopicDbTables> GetByIdAsync(int id)
         {
-             await _context.Database.MigrateAsync();
+            // await _context.Database.MigrateAsync();
                var topic = await _context.TopicDbTables.FindAsync(id);
 
             if (topic == null)

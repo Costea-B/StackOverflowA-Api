@@ -38,17 +38,17 @@ namespace StackOverflow.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("Login")]
-        public IActionResult Login(UserModel user)
+        public IActionResult Login([FromQuery] string email, string password)
         {
-            IActionResult response = Unauthorized();
+             UserModel user = new UserModel(0, email, email, password);
+             var users = _userService.LoginUsers(user);
+             if (users != null)
+             {
+                  return Ok();
+             }
 
-            if (user?.Name == "foo" && user?.Password == "bar")
-            {
-                response = Ok();
-            }
-
-            return response;
-        }
+               return  Problem();
+          }
 
     }
 }

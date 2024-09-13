@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataBase.Repositories
+namespace DataBase.Abstraction
 {
     public interface IReplyRepository
     {
@@ -15,7 +15,7 @@ namespace DataBase.Repositories
         Task<ReplyDbTables> GetByIdAsync(int replyId);
         Task<List<ReplyDbTables>> GetAllForTopicAsync(int topicId);
         Task<ReplyDbTables> UpdateAsync(int replyId, string newDescription);
-        Task<ReplyDbTables> CreateToReplyAsync(int parentId,CreateReplyRequest request);
+        Task<ReplyDbTables> CreateToReplyAsync(int parentId, CreateReplyRequest request);
         Task<List<ReplyViewModel>> GetRepliesAsync(int topicId);
         Task DeleteAsync(int replyId);
     }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Core.Models;
 using Core.ViewModel;
+using DataBase.Abstraction;
 
 namespace DataBase.Repositories
 {
@@ -49,7 +50,7 @@ namespace DataBase.Repositories
 
         public async Task<ReplyDbTables> GetByIdAsync(int id)
         {
-             await _context.Database.MigrateAsync();
+           //  await _context.Database.MigrateAsync();
             var reply = await _context.ReplyDbTables.FindAsync(id);
             if (reply == null)
             {
