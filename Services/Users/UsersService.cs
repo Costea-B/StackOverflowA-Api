@@ -1,4 +1,6 @@
 ﻿using Core.Models;
+using Core.Models.Requests;
+using Core.ViewModel;
 using DataBase.Repositories;
 using Services.Abstractions;
 
@@ -27,14 +29,14 @@ namespace Services.Users
                
                
           }
-          public UserModel CreateNewUsers(UserModel user)
+          public Task<RegisterViewModel> Register(UserRegRequest user)
           {
                
                var userLogin = _usersRepository.CreateUser(user);
                return userLogin;
           }
 
-          public UserModel LoginUsers(UserModel user)
+          public UserModel LoginUser(UserModel user)
           {
                var userLogin = _usersRepository.LoginUsers(user);
                

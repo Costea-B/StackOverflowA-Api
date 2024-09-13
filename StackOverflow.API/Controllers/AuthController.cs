@@ -20,36 +20,36 @@ namespace StackOverflow.API.Controllers
             _jwtProvid = jwtProvid;
         }
 
-        [HttpPost("login")]
-        public IActionResult login([FromBody] UserModel userModel)
-        {
-            var user = _usersService.LoginUsers(userModel);
+        //[HttpPost("login")]
+        //public IActionResult login([FromBody] UserModel userModel)
+        //{
+        //    var user = _usersService.LoginUsers(userModel);
 
-            if (user == null)
-            {
-                return Unauthorized(new { message = "Invalid credentials" });
-            }
+        //    if (user == null)
+        //    {
+        //        return Unauthorized(new { message = "Invalid credentials" });
+        //    }
 
-            var token = _jwtProvid.GenerateJwtToken(user);
+        //    var token = _jwtProvid.GenerateJwtToken(user);
 
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                Expires = DateTime.UtcNow.AddMinutes(30),
-                SameSite = SameSiteMode.Strict
-            };
+        //    var cookieOptions = new CookieOptions
+        //    {
+        //        HttpOnly = true,
+        //        Secure = true,
+        //        Expires = DateTime.UtcNow.AddMinutes(30),
+        //        SameSite = SameSiteMode.Strict
+        //    };
 
-            Response.Cookies.Append("JwtToken", token, cookieOptions);
+        //    Response.Cookies.Append("JwtToken", token, cookieOptions);
 
-            return Ok(new { message = "Login successful" });
-        }
+        //    return Ok(new { message = "Login successful" });
+        //}
 
-        [HttpPost("logout")]
-        public IActionResult logout()
-        {
-            Response.Cookies.Delete("JwtToken");
-            return Ok(new { message = "Logout successful" });
-        }
+        //[HttpPost("logout")]
+        //public IActionResult logout()
+        //{
+        //    Response.Cookies.Delete("JwtToken");
+        //    return Ok(new { message = "Logout successful" });
+        //}
     }
 }
