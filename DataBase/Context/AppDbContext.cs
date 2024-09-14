@@ -18,7 +18,7 @@ namespace DataBase.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configurarea relațiilor între entități
+            
 
             // Configurarea relației între Reply și Topic
             modelBuilder.Entity<ReplyDbTables>()
@@ -32,7 +32,7 @@ namespace DataBase.Context
                 .HasOne(r => r.Author)
                 .WithMany(u => u.Replies)
                 .HasForeignKey(r => r.AuthorId)
-                .OnDelete(DeleteBehavior.Cascade); // Opțional: Ștergerea unui User șterge și Replies asociate
+                .OnDelete(DeleteBehavior.Restrict); // Opțional: Ștergerea unui User șterge și Replies asociate
 
             base.OnModelCreating(modelBuilder);
         }

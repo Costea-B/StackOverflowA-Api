@@ -41,12 +41,17 @@ namespace DataBase.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<int?>("ParentReplyId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TopicId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("ParentReplyId");
 
                     b.HasIndex("TopicId");
 
@@ -109,31 +114,6 @@ namespace DataBase.Migrations
                     b.ToTable("UserDbTables");
                 });
 
-            modelBuilder.Entity("Core.Models.UserModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserModel");
-                });
-
             modelBuilder.Entity("Core.DbModels.ReplyDbTables", b =>
                 {
                     b.HasOne("Core.DbModels.UsersDbTables", "Author")
@@ -141,6 +121,10 @@ namespace DataBase.Migrations
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Core.DbModels.ReplyDbTables", "ParentReply")
+                        .WithMany("ChildReplies")
+                        .HasForeignKey("ParentReplyId");
 
                     b.HasOne("Core.DbModels.TopicDbTables", "Topic")
                         .WithMany("Replies")
@@ -150,18 +134,25 @@ namespace DataBase.Migrations
 
                     b.Navigation("Author");
 
+                    b.Navigation("ParentReply");
+
                     b.Navigation("Topic");
                 });
 
             modelBuilder.Entity("Core.DbModels.TopicDbTables", b =>
                 {
-                    b.HasOne("Core.Models.UserModel", "User")
+                    b.HasOne("Core.DbModels.UsersDbTables", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Core.DbModels.ReplyDbTables", b =>
+                {
+                    b.Navigation("ChildReplies");
                 });
 
             modelBuilder.Entity("Core.DbModels.TopicDbTables", b =>

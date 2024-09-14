@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Models;
 using DataBase.Context;
 
 namespace DataBase.Repositories
@@ -20,7 +21,9 @@ namespace DataBase.Repositories
 
         public async Task<TopicDbTables> GetByIdAsync(int id)
         {
-            // await _context.Database.MigrateAsync();
+             //aici e doar pentru megrarea initiala a datelor fara alt ceva, date in tabel nu vor fi introduci manual nu si lenos)
+
+             //  await _context.Database.MigrateAsync();
                var topic = await _context.TopicDbTables.FindAsync(id);
 
             if (topic == null)

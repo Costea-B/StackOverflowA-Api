@@ -11,8 +11,8 @@ namespace Core.DbModels
 
           public IList<string> Tags { get; set; } = new List<string>();
 
-          public UserModel? User { get; set; }
+          public UsersDbTables User { get; set; }
           public int UserId { get; set; }
-        public ICollection<ReplyDbTables> Replies { get; set; }
+          public ICollection<ReplyDbTables> Replies { get; set; }
     }
 }
