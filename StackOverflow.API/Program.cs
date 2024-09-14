@@ -1,8 +1,10 @@
+using DataBase.Abstraction;
 using DataBase.Context;
 using DataBase.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Services.Abstractions;
+using Services.Topic;
 using Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,8 @@ builder.Services.AddScoped<UsersRepository>();
 builder.Services.AddScoped<IUsersServices, UsersServices>();
 builder.Services.AddScoped<ITopicService, TopicService>();
 builder.Services.AddScoped<ITopicRepository, TopicRepository>();
+builder.Services.AddScoped<IReplyService, ReplyServices>();
+builder.Services.AddScoped<IReplyRepository, ReplyRepository>();
 
 builder.Services.AddCors(option =>
 {
