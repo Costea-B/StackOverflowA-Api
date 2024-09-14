@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Models;
 using DataBase.Context;
+using DataBase.Abstraction;
 
 namespace DataBase.Repositories
 {
