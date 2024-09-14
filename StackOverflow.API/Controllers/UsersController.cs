@@ -5,21 +5,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstractions;
 using Services.Users;
+using System.ComponentModel.DataAnnotations;
 
 namespace StackOverflow.API.Controllers
 {
-  
-    /*
-     * eu si costea avem diferite taburi/spaceuri
-     * dbcontext trebu injectat? (in cazu ista ar trebui un singur repo si nare sens)
-     * 
-     * 
-     * 
-     * 
-     * 
-     */
-
-
     [Route("api/[controller]")]
     [ApiController]
     //[ProducesResponseType(StatusCodes.Status201Created)]
@@ -39,8 +28,9 @@ namespace StackOverflow.API.Controllers
             if(!ModelState.IsValid) return BadRequest(ModelState);
             // TODO: add custom validators
 
-            var response = await _userService.Register(user);
-            
+            //var response = await _userService.Register(user);
+            var response = await Task.FromResult(0);
+
             return Ok(response);
         }
 

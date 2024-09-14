@@ -1,18 +1,32 @@
 ﻿using Core.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Net.Mail;
+using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Core.Models.Requests
 {
-    public class UserRegRequest
+    public class UserRegRequest : IValidatableObject
     {
-        // TODO: in loc de string.empty se poate de incercat required keyword sau attribute
-        public string FullName { get; set; } = String.Empty;
-        public string Email { get; set; } = String.Empty;
-        public string Password { get; set; } = String.Empty;
+        [Required]
+        public string FullName { get; set; } = default!;
+        [Required]
+        public string Email { get; set; } = default!;
+        [Required]
+        public string Password { get; set; } = default!;
+        [Required]
         public Job JobTitle { get; set; }
+
+        // as an alternative, we can use Fluent Validation lib
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var results = new List<ValidationResult>();
+            
+            if (!InputValidator.IsEmailValid(Email)) results.Add(new ValidationResult("Invalid email address"));
+
+            if (!InputValidator.IsPasswordValid(Password)) results.Add(new ValidationResult("Invalid password"));
+
+            return results;
+        }
     }
 }
