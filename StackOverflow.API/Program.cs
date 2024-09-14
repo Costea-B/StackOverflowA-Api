@@ -20,9 +20,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(buil
 builder.Services.AddScoped<UsersRepository>();
 builder.Services.AddScoped<IUsersServices, UsersServices>();
 builder.Services.AddScoped<UsersRepository>();
-builder.Services.AddScoped<TopicService>();
 builder.Services.AddScoped<ITopicService, TopicService>();
-builder.Services.AddScoped<TopicRepository>();
 builder.Services.AddScoped<ITopicRepository, TopicRepository>();
 
 builder.Services.AddCors(option =>

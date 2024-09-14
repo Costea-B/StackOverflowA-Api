@@ -28,6 +28,7 @@ namespace DataBase.Repositories
           public UserModel LoginUsers(UserModel user)
           {
                var auth =  _dbContext.UserDbTables.FirstOrDefault(x => x.Name == user.Name );
+               var usersTest = _dbContext.UserDbTables.ToList();
                if (auth != null)
                {
                     var users = new UserModel(auth.Id, auth.Name, auth.Email, auth.Password);

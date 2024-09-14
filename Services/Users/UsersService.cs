@@ -20,9 +20,9 @@ namespace Services.Users
      public class UsersServices : IUsersServices
      {
           private readonly UsersRepository _usersRepository;
-          
-         
 
+
+         
           public UsersServices(UsersRepository usersRepository )
           {
                _usersRepository = usersRepository;
