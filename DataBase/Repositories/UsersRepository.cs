@@ -2,11 +2,12 @@
 using Core.Models;
 using Core.Models.Requests;
 using Core.ViewModel;
+using DataBase.Abstraction;
 using DataBase.Context;
 
 namespace DataBase.Repositories
 {
-    public class UsersRepository 
+    public class UsersRepository : IUserRepository
      {
           private readonly AppDbContext _dbContext;
           
@@ -28,7 +29,6 @@ namespace DataBase.Repositories
           public UserModel LoginUsers(UserModel user)
           {
                var auth =  _dbContext.UserDbTables.FirstOrDefault(x => x.Name == user.Name );
-               var usersTest = _dbContext.UserDbTables.ToList();
                if (auth != null)
                {
                     var users = new UserModel(auth.Id, auth.Name, auth.Email, auth.Password);

@@ -45,5 +45,17 @@ namespace DataBase.Repositories
             _context.TopicDbTables.Add(topic);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+             var topic = await _context.TopicDbTables.FirstOrDefaultAsync(t => t.Id == id);
+             if (topic == null)
+             {
+                  return false;
+             }
+             _context.TopicDbTables.Remove(topic);
+             await _context.SaveChangesAsync();
+             return true;
+        }
     }
 }

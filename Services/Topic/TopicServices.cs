@@ -42,4 +42,11 @@ public class TopicService : ITopicService
 
         return topicDbTable;
     }
+
+    public async Task<bool> DeleteTopicAsync(int id)
+    {
+         bool status = await _topicRepository.DeleteAsync(id);
+         
+         return status;
+    }
 }

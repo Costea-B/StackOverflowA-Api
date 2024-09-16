@@ -53,11 +53,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("Policy");
+
 app.UseRouting();
 
 app.UseAuthentication();
-
-
 
 app.MapControllers();
 

@@ -17,7 +17,7 @@ namespace StackOverflow.API.Controllers
 
         // Obtine un reply după ID
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetReplyById(int id)
+        public async Task<IActionResult> GetReplyById([FromRoute] int id)
         {
             var reply = await _replyService.GetReplyByIdAsync(id);
             if (reply == null)
@@ -29,7 +29,7 @@ namespace StackOverflow.API.Controllers
 
         // Obtine toate reply-urile pentru un anumit topic
         [HttpGet("topic/{topicId}")]
-        public async Task<IActionResult> GetRepliesForTopic(int topicId)
+        public async Task<IActionResult> GetRepliesForTopic([FromRoute]int topicId)
         {
             var replies = await _replyService.GetRepliesForToticAsync(topicId);
             return Ok(replies);
@@ -70,7 +70,7 @@ namespace StackOverflow.API.Controllers
 
         // Editeaza un reply existent / adauga end-point
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateReply(int id, [FromBody] string newDescription)
+        public async Task<IActionResult> UpdateReply([FromRoute] int id, [FromBody] string newDescription)
         {
             var newReply = await _replyService.UpdateReplyAsync(id, newDescription);
             if (newReply == null)
@@ -81,7 +81,7 @@ namespace StackOverflow.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReply(int id)
+        public async Task<IActionResult> DeleteReply([FromRoute] int id)
         {
             try
             {
