@@ -119,7 +119,7 @@ namespace DataBase.Migrations
                     b.HasOne("Core.DbModels.UsersDbTables", "Author")
                         .WithMany("Replies")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Core.DbModels.ReplyDbTables", "ParentReply")

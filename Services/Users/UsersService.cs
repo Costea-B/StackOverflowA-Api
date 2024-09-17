@@ -39,34 +39,8 @@ namespace Services.Users
           public UserModel LoginUser(UserModel user)
           {
                var userLogin = _usersRepository.LoginUsers(user);
-               
-                    return userLogin;
-               
-               
+               return userLogin;
           }
      }
-
-  //   public class UsersService2 : IUsersServices
-  //   {
-  //        private readonly UsersRepository _usersRepository;
-  //
-  //        public UsersService2(UsersRepository usersRepository)
-  //        {
-  //             _usersRepository = usersRepository;
-  //        }
-  //        public UserModel LoginUser(UserModel users)
-  //        {
-  //             var user = new UserModel();
-  //             user.Name = (users.Id + 3).ToString();
-  //             user.Id = users.Id + 2;
-  //
-  //
-  //             var userss = _usersRepository.CreateUser(user);
-  //
-  //              TODO : DB LOGIC
-  //             return user;
-  //        }
-  //   }
-
 
 }

@@ -1,5 +1,6 @@
 ﻿using Core.Models;
 using Core.Models.Requests;
+using Core.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,8 @@ namespace StackOverflow.API.Controllers
          {
               _userService = userService;
          }
-
+         
+         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegRequest user)
         {
@@ -44,27 +46,21 @@ namespace StackOverflow.API.Controllers
             return Ok(response);
         }
 
-        //[HttpGet("LoginUser/{id}")]
-        //public UserModel LoginUser(int id, string name, string password)
-        //{
-        //    var user = new UserModel(id, name, "joric", password);
-        //    return _userService.LoginUser(user);
-        //}
-
 
         [AllowAnonymous]
         [HttpPost("Login")]
-        public IActionResult Login([FromQuery] string email, string password)
+        public async Task<IActionResult> Login([FromBody] UserViewModel user)
         {
-             UserModel user = new UserModel(0, email, email, password);
-             var users = _userService.LoginUser(user);
-             if (users != null)
-             {
-                  return Ok();
-             }
-
-               return  Problem();
-          }
+               
+             
+             //var users = _userService.LoginUser(user);
+            // if (users != null)
+            // {
+            //      return Ok();
+            // }
+            //
+            return Ok();
+        }
 
     }
 }

@@ -18,15 +18,19 @@ namespace Services.Users
 
           public string GenerateJwtToken(UserModel user)
           {
+               var encryp = _hash.HashJwt(user.Name);
+               var key = Encoding.UTF8.GetBytes(encryp);
+
                Claim[] claims = 
                {
                     new Claim("userName", user.Name),
                     new Claim("userId", user.Id.ToString())
                };
 
-               var key = _hash.Generate(user.Name);
+               
+
                var signingCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+                    new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha256
                );
 

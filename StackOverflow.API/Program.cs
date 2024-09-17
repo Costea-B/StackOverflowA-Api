@@ -17,7 +17,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<AppDbContext>(options => options
+     .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<UsersRepository>();
 builder.Services.AddScoped<IUsersServices, UsersServices>();
@@ -25,6 +26,9 @@ builder.Services.AddScoped<ITopicService, TopicService>();
 builder.Services.AddScoped<ITopicRepository, TopicRepository>();
 builder.Services.AddScoped<IReplyService, ReplyServices>();
 builder.Services.AddScoped<IReplyRepository, ReplyRepository>();
+builder.Services.AddScoped<PasswordHash>();
+builder.Services.AddScoped<IPasswordHash, PasswordHash>();
+builder.Services.AddScoped<JwtProvid>();
 
 builder.Services.AddCors(option =>
 {
@@ -50,15 +54,21 @@ if (app.Environment.IsDevelopment())
 
 
 
+
 app.UseHttpsRedirection();
 
 app.UseCors("Policy");
 
 app.UseRouting();
 
-app.UseAuthentication();
+app.UseAuthentication();  
+app.UseAuthorization();   
+
+app.UseMiddleware<JwtMiddleware>(); 
 
 app.MapControllers();
+
+
 
 app.Run();
 

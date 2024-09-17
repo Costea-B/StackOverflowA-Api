@@ -1,5 +1,7 @@
 ﻿
 using Services.Abstractions;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Services.Users
 {
@@ -13,6 +15,16 @@ namespace Services.Users
           public bool Verify(string password, string hashPassword)
           {
                return BCrypt.Net.BCrypt.EnhancedVerify(password, hashPassword);
+          }
+
+          public string HashJwt(string password)
+          {
+               using (var md5 = MD5.Create())
+               {
+                    var inputBytes = Encoding.UTF8.GetBytes(password);
+                    var hashBytes = md5.ComputeHash(inputBytes);
+                    return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+               }
           }
      }
 }

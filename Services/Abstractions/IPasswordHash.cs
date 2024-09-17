@@ -10,5 +10,7 @@ namespace Services.Abstractions
      {
           string Generate(string password);
           bool Verify(string password, string hashPassword);
+
+          string HashJwt(string password);
      }
 }
