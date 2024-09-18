@@ -27,6 +27,13 @@ namespace DataBase.Context
                 .HasForeignKey(r => r.TopicId) // cheaia straina pentru relatii poate exista HashKey() cheie primara din acelasi tabel 
                 .OnDelete(DeleteBehavior.Cascade);         // Stergerea unui topic va sterge toate raspunsurile acestuia 
 
+            //Configurarea relatiei intre User si Topic
+            modelBuilder.Entity<TopicDbTables>()
+                .HasOne(t => t.User) //Asta cand un topic este creat de un singur user
+                .WithMany(u => u.Topics) //Aici cand un user poate crea mai multe topicuri
+                .HasForeignKey(t => t.UserId) 
+                .OnDelete(DeleteBehavior.Restrict); //Aici nu poti sterge un user daca el are create topicuri
+
         
             // Configurarea relației între Reply și User
             modelBuilder.Entity<ReplyDbTables>()

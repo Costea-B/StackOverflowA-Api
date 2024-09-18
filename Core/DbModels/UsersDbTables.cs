@@ -30,6 +30,7 @@ namespace Core.DbModels
           [Required]
           public string Email { get; set; }
           public ICollection<ReplyDbTables> Replies { get; set; }
+          public ICollection<TopicDbTables> Topics { get; set; } = new List<TopicDbTables>();
 
     }
 }
