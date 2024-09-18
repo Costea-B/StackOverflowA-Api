@@ -32,7 +32,7 @@ namespace Core.DbModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        public int AuthorId { get; set; }
+        public int? AuthorId { get; set; }
         public UsersDbTables Author { get; set; }
         [Required]
         [StringLength(500)]
