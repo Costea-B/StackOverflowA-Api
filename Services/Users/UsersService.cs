@@ -27,9 +27,9 @@ namespace Services.Users
 
           public Task<UserRegRequest> Register(UserRegRequest user)
           {
-
+               user.Password = _passwordHash.Generate(user.Password);
                var userLogin = _usersRepository.Register(user);
-               return null;
+               return userLogin;
           }
 
           public async Task<string> Login(UserLoginRequest user)

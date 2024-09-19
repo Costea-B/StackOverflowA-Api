@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Enums;
 
 namespace Core.DbModels
 {
@@ -29,6 +30,7 @@ namespace Core.DbModels
 
           [Required]
           public string Email { get; set; }
+
           public ICollection<ReplyDbTables> Replies { get; set; }
           public ICollection<TopicDbTables> Topics { get; set; } = new List<TopicDbTables>();
 

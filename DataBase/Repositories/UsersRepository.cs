@@ -24,7 +24,6 @@ namespace DataBase.Repositories
 
             await _dbContext.UserDbTables.AddAsync(newUser);
             await _dbContext.SaveChangesAsync();
-
             
             return new UserRegRequest { FullName = newUser.Name };
           }
