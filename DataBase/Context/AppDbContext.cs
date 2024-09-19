@@ -52,6 +52,13 @@ namespace DataBase.Context
 
                
             base.OnModelCreating(modelBuilder);
+
+            //Configurarea intre Topic si Replies
+            modelBuilder.Entity<TopicDbTables>()
+                .HasMany(t => t.Replies)  // Un topic poate avea mai multe replies
+                .WithOne(r => r.Topic)  // Fiecare reply aparține unui singur topic
+                .HasForeignKey(r => r.TopicId)  // Cheia străină în Reply este TopicId
+                .OnDelete(DeleteBehavior.Cascade);  // La ștergerea unui topic, se șterg toate replies asociate
         }
     }
 }
