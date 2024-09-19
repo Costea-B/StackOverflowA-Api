@@ -42,23 +42,16 @@ namespace DataBase.Context
                  .HasForeignKey(r => r.AuthorId)
                  // .OnDelete(DeleteBehavior.Restrict);  // nu pot sterge un user daca are raspunsuri 
                  .OnDelete(DeleteBehavior.SetNull); // la stergea user raspunsurile o sa ramana orfane fara useru care la creat
-
-            //Configurari pentru reply de reply Ion Poate)
-            modelBuilder.Entity<ReplyDbTables>()
-                 .HasOne(r => r.ParentReply)                // Un Reply poate avea un Reply părinte
-                 .WithMany(r => r.ChildReplies)             // Un Reply poate avea mai multe Replies copil
-                 .HasForeignKey(r => r.ParentReplyId)
-                 .OnDelete(DeleteBehavior.Cascade);                    // La ștergerea unui Reply părinte, șterge și toate Replies copil
-
                
-            base.OnModelCreating(modelBuilder);
-
+            
             //Configurarea intre Topic si Replies
             modelBuilder.Entity<TopicDbTables>()
                 .HasMany(t => t.Replies)  // Un topic poate avea mai multe replies
                 .WithOne(r => r.Topic)  // Fiecare reply aparține unui singur topic
                 .HasForeignKey(r => r.TopicId)  // Cheia străină în Reply este TopicId
                 .OnDelete(DeleteBehavior.Cascade);  // La ștergerea unui topic, se șterg toate replies asociate
-        }
+
+            base.OnModelCreating(modelBuilder);
+          }
     }
 }

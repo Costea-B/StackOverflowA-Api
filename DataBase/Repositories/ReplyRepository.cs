@@ -34,7 +34,7 @@ namespace DataBase.Repositories
             {
                 throw new Exception("Parent reply not found");
             }
-            var newReply = new ReplyDbTables(request.AuthorId, request.Description, request.TopicId, request.ParentReplyId);
+            var newReply = new ReplyDbTables(request.AuthorId, request.Description, request.TopicId);
 
             _context.ReplyDbTables.Add(newReply);
             await _context.SaveChangesAsync();
@@ -59,18 +59,12 @@ namespace DataBase.Repositories
             return reply;
         }
 
-        private List<ReplyViewModel> MapReplies(ICollection<ReplyDbTables> replies)
-        {
-            return replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.Description, r.CreatedAt, MapReplies(r.ChildReplies))).ToList();
-        }
-
         public async Task<List<ReplyViewModel>> GetRepliesAsync(int topicId)
         {
             var replies = await _context.ReplyDbTables
-                .Where(r => r.TopicId == topicId && r.ParentReplyId == null)
-                .Include(r => r.ChildReplies)
+                .Where(r => r.TopicId == topicId)
                 .ToListAsync();
-            var replyViewModels = replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.Description, r.CreatedAt, MapReplies(r.ChildReplies))).ToList();
+            var replyViewModels = replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.Description, r.CreatedAt)).ToList();
 
             return replyViewModels;
         }
@@ -90,26 +84,15 @@ namespace DataBase.Repositories
 
         public async Task DeleteAsync(int replyId)
         {
-            var reply = await _context.ReplyDbTables.Include(r => r.ChildReplies).FirstOrDefaultAsync(r => r.Id == replyId);
+            var reply = await _context.ReplyDbTables.FirstOrDefaultAsync(r => r.Id == replyId);
             if (reply == null)
             {
                 throw new Exception($"Reply with ID {replyId} not found.");
             }
 
-            DeleteChildReplies(reply.ChildReplies);
-
             _context.ReplyDbTables.Remove(reply);
             await _context.SaveChangesAsync();
         }
-
-        private void DeleteChildReplies(IEnumerable<ReplyDbTables> replies)
-        {
-            foreach (var reply in replies.ToList())
-            {
-                DeleteChildReplies(reply.ChildReplies);
-
-                _context.ReplyDbTables.Remove(reply);
-            }
-        }
+       
     }
 }

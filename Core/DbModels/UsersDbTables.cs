@@ -10,7 +10,7 @@ namespace Core.DbModels
 {
      public class UsersDbTables
      {
-          public UsersDbTables( string name, string password, string email)
+          public UsersDbTables(string name, string password, string email)
           {
                Name = name;
                Password = password;

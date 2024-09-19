@@ -4,6 +4,8 @@ using Core.Models.Requests;
 using Core.ViewModel;
 using DataBase.Abstraction;
 using DataBase.Context;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataBase.Repositories
 {
@@ -16,25 +18,26 @@ namespace DataBase.Repositories
                _dbContext = dbContext;
           }
 
-          public async Task<RegisterViewModel> Register(UserRegRequest user)
+          public async Task<UserRegRequest> Register(UserRegRequest user)
           {
                var newUser = new UsersDbTables(user.FullName, user.Password, user.Email);
 
             await _dbContext.UserDbTables.AddAsync(newUser);
             await _dbContext.SaveChangesAsync();
 
-            return new RegisterViewModel { Id = newUser.Id};
+            
+            return new UserRegRequest { FullName = newUser.Name };
           }
 
-          public UserModel LoginUsers(UserModel user)
+          public async Task<UserModel> LoginUsers(UserLoginRequest user)
           {
-               var auth =  _dbContext.UserDbTables.FirstOrDefault(x => x.Name == user.Name );
-               if (auth != null)
+               var auth = await _dbContext.UserDbTables.FirstOrDefaultAsync(x => x.Email == user.Email );
+               if (auth == null)
                {
-                    var users = new UserModel(auth.Id, auth.Name, auth.Email, auth.Password);
-                    return users;
+                     throw new Exception("Invalid credential");
                }
-               return null;
+
+               return new UserModel(auth.Id, auth.Name, auth.Email, auth.Password);
           }
      }
 }

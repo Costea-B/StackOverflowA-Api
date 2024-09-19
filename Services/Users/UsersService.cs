@@ -1,45 +1,48 @@
 ﻿using Core.Models;
 using Core.Models.Requests;
 using Core.ViewModel;
+using DataBase.Abstraction;
 using DataBase.Repositories;
+using Microsoft.Identity.Client;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Services.Abstractions;
-
-
-// IUsersService = Services => Abstractions
-// UserModel class = CORE
-// UsersService (Create, Get by ID, login) / Services => Implementations
-// UsersDbContext DataBase / Contexts
-// IUsersDbContext - optional / Database => Abstractions
-// UsersController - create , login (JWT) | API => Controllers
-
-
+using UserModel = Core.Models.UserModel;
 
 
 namespace Services.Users
 {
      public class UsersServices : IUsersServices
      {
-          private readonly UsersRepository _usersRepository;
-
+          private readonly IUserRepository _usersRepository;
+          private readonly JwtProvid _jtw;
+          private readonly IPasswordHash _passwordHash;
 
          
-          public UsersServices(UsersRepository usersRepository )
+          public UsersServices(UsersRepository usersRepository, JwtProvid jwt ,  IPasswordHash passwordHash)
           {
                _usersRepository = usersRepository;
-               
-               
-          }
-          public Task<RegisterViewModel> Register(UserRegRequest user)
-          {
-               
-               var userLogin = _usersRepository.Register(user);
-               return userLogin;
+               _jtw=jwt;
+               _passwordHash = passwordHash;
           }
 
-          public UserModel LoginUser(UserModel user)
+          public Task<UserRegRequest> Register(UserRegRequest user)
           {
-               var userLogin = _usersRepository.LoginUsers(user);
-               return userLogin;
+
+               var userLogin = _usersRepository.Register(user);
+               return null;
+          }
+
+          public async Task<string> Login(UserLoginRequest user)
+          {
+               var users = await _usersRepository.LoginUsers(user);
+               var result = _passwordHash.Verify(password: user.Password, hashPassword: users.Password);
+
+               if (!result)
+               {
+                    throw new Exception("baran)");
+               }
+
+               return _jtw.GenerateJwtToken(users);
           }
      }
 

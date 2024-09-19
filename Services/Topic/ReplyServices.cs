@@ -43,11 +43,6 @@ namespace Services.Topic
             return await _replyRepository.UpdateAsync(replyId, newDescription);
         }
 
-        public async Task<ReplyDbTables> CreateReplyToReplyAsync(int parentReplyId, CreateReplyRequest request)
-        {
-            return await _replyRepository.CreateToReplyAsync(parentReplyId, request);
-        }
-
         public async Task<List<ReplyViewModel>> GetRepliesForTopicAsync(int topicId)
         {
             return await _replyRepository.GetRepliesAsync(topicId);

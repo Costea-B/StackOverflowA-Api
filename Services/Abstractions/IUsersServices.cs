@@ -6,7 +6,7 @@ namespace Services.Abstractions
 {
     public interface IUsersServices
      {
-          UserModel LoginUser(UserModel users);
-          Task<RegisterViewModel> Register(UserRegRequest user);
+          Task<string> Login(UserLoginRequest users);
+          Task<UserRegRequest> Register(UserRegRequest user);
      }
 }

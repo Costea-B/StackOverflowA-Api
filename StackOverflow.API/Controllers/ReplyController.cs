@@ -9,12 +9,12 @@ namespace StackOverflow.API.Controllers
     public class ReplyController : ControllerBase
     {
         private readonly IReplyService _replyService;
-
+ 
         public ReplyController(IReplyService replyService)
         {
             _replyService = replyService;
         }
-
+ 
         // Obtine un reply după ID
         [HttpGet("{id}")]
         public async Task<IActionResult> GetReplyById([FromRoute] int id)
@@ -26,7 +26,7 @@ namespace StackOverflow.API.Controllers
             }
             return Ok(reply);
         }
-
+ 
         // Obtine toate reply-urile pentru un anumit topic
         [HttpGet("topic/{topicId}")]
         public async Task<IActionResult> GetRepliesForTopic([FromRoute]int topicId)
@@ -34,7 +34,7 @@ namespace StackOverflow.API.Controllers
             var replies = await _replyService.GetRepliesForToticAsync(topicId);
             return Ok(replies);
         }
-
+ 
         // Creeaza un reply
         [HttpPost]
         public async Task<IActionResult> CreateReply([FromBody] CreateReplyRequest request)
@@ -43,31 +43,11 @@ namespace StackOverflow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+ 
             var newReply = await _replyService.CreateReplyAsync(request);
             return CreatedAtAction(nameof(GetReplyById), new { id = newReply.Id }, newReply);
         }
-
-        // Creeaza un reply copil
-        [HttpPost("{parentReplyId}/reply")]
-        public async Task<IActionResult> CreateChildReply(int parentReplyId, [FromBody] CreateReplyRequest request)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                var newReply = await _replyService.CreateReplyToReplyAsync(parentReplyId, request);
-                return CreatedAtAction(nameof(GetReplyById), new { id = newReply.Id }, newReply);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(new { message = ex.Message });
-            }
-        }
-
+ 
         // Editeaza un reply existent / adauga end-point
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateReply([FromRoute] int id, [FromBody] string newDescription)
@@ -79,7 +59,8 @@ namespace StackOverflow.API.Controllers
             }
             return Ok(newReply);
         }
-
+ 
+        //sterge un reply
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReply([FromRoute] int id)
         {

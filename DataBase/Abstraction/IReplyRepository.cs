@@ -15,7 +15,6 @@ namespace DataBase.Abstraction
         Task<ReplyDbTables> GetByIdAsync(int replyId);
         Task<List<ReplyDbTables>> GetAllForTopicAsync(int topicId);
         Task<ReplyDbTables> UpdateAsync(int replyId, string newDescription);
-        Task<ReplyDbTables> CreateToReplyAsync(int parentId, CreateReplyRequest request);
         Task<List<ReplyViewModel>> GetRepliesAsync(int topicId);
         Task DeleteAsync(int replyId);
     }

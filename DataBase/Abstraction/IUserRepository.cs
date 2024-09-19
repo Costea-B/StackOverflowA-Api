@@ -11,7 +11,7 @@ namespace DataBase.Abstraction
 {
      public interface IUserRepository
      {
-          Task<RegisterViewModel> Register(UserRegRequest user);
-          UserModel LoginUsers(UserModel user);
+          Task<UserRegRequest> Register(UserRegRequest user);
+          Task<UserModel> LoginUsers(UserLoginRequest  user);
      }
 }

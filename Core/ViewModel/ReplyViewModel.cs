@@ -10,13 +10,12 @@ namespace Core.ViewModel
 {
     public class ReplyViewModel
     {
-        public ReplyViewModel(int id, int? authorId, string description, DateTime createdAt,List<ReplyViewModel> childReplies) 
+        public ReplyViewModel(int id, int? authorId, string description, DateTime createdAt) 
         {
             Id = id;
             AuthorId = authorId;
             Description = description;
             CreatedAt = createdAt;
-            ChildReplies = childReplies;
         }
 
         public int Id { get; set; }
@@ -25,6 +24,6 @@ namespace Core.ViewModel
         public DateTime CreatedAt { get; set; } 
         public int TopicId { get; set; }
         public string AuthorName { get; set; }
-        public List<ReplyViewModel> ChildReplies { get; set; }
+       
     }
 }
