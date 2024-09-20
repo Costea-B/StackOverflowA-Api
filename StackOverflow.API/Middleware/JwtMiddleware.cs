@@ -23,7 +23,7 @@ public class JwtMiddleware
 
     public async Task Invoke(HttpContext context)
     {
-        if (context.Request.Cookies.ContainsKey("JwtToken"))
+        if (context.Request.Headers.ContainsKey("Authorization"))
         {
              var endpoint = context.GetEndpoint();
              if (endpoint?.Metadata?.GetMetadata<AllowAnonymousAttribute>() != null)
@@ -32,7 +32,7 @@ public class JwtMiddleware
                   return;
              }
 
-               var token = context.Request.Cookies["JwtToken"];
+               var token = context.Request.Headers["Authorization"];
 
             if (!string.IsNullOrEmpty(token))
             {

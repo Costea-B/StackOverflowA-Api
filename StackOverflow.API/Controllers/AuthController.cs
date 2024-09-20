@@ -1,6 +1,7 @@
 ﻿using Core.Models;
 using Core.Models.Requests;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstractions;
 using Services.Users;
@@ -30,18 +31,14 @@ namespace StackOverflow.API.Controllers
        //       }
        //       
        //   var token = _jwtProvid.GenerateJwtToken(user);
-       
-          var cookieOptions = new CookieOptions
-           {
-               HttpOnly = true,
-               Secure = true,
-               Expires = DateTime.UtcNow.AddMinutes(30),
-               SameSite = SameSiteMode.Strict
-           };
-       
-           Response.Cookies.Append("JwtToken", token, cookieOptions);
-       
-           return Ok(new { message = "Login successful" });
+
+       if (token == null)
+       {
+            return Unauthorized(new { message = "Invalid credentials" });
+       }
+
+       return Ok(new { token });
+
        }
 
        [HttpPost("logout")]

@@ -29,7 +29,7 @@ namespace StackOverflow.API.Controllers
         }
 
 
-        [AllowAnonymous]
+        
         [HttpGet]
         public async Task<IActionResult> GetAllTopics()
         {
