@@ -16,7 +16,7 @@ namespace Core
             * (?=.*\d) = at least one digit
             * [a-zA-Z\d] = at least one lower/upper/digit from 8 to unlimited char
             */
-        [GeneratedRegex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")]
+        [GeneratedRegex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$", RegexOptions.Compiled, 2000)]
         private static partial Regex PassRegex();
 
         public static bool IsPasswordValid(string password)
