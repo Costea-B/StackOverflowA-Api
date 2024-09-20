@@ -14,5 +14,7 @@ namespace DataBase.Repositories
         Task AddAsync(TopicDbTables topic);
 
         Task<bool> DeleteAsync(int id);
+
+        Task<List<TopicDbTables>> GetTopicsByUserIdAsync(int userId);
     }
 }

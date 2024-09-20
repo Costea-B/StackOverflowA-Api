@@ -57,5 +57,12 @@ namespace DataBase.Repositories
              await _context.SaveChangesAsync();
              return true;
         }
+
+        public async Task<List<TopicDbTables>> GetTopicsByUserIdAsync(int userId)
+        {
+            return await _context.TopicDbTables
+                .Where(t => t.UserId == userId)
+                .ToListAsync();
+        }
     }
 }

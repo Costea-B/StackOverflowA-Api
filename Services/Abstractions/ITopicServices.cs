@@ -15,6 +15,8 @@ namespace Services.Abstractions
         Task<List<TopicDbTables>> GetAllTopicsAsync();
         Task<TopicDbTables> CreateTopicAsync(CreateTopicRequest request);
         Task<bool> DeleteTopicAsync(int id);
+
+        Task<List<TopicDbTables>> GetTopicsByUserIdAsync(int userId);
     }
 
 }
