@@ -11,25 +11,25 @@ namespace Core.DbModels
 {
     public class ReplyDbTables
     {
-         public ReplyDbTables( int? authorId, string description, int topicId)
-         {
-              AuthorId = authorId;
-              Description = description;
-              TopicId = topicId;
-         }
+        public ReplyDbTables(int? authorId, string description, int? topicId)
+        {
+            AuthorId = authorId;
+            Description = description;
+            TopicId = topicId;
+        }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
+        //[Required]
         public int? AuthorId { get; set; }
         public UsersDbTables? Author { get; set; }
         [Required]
         [StringLength(500)]
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        [Required]
-        public int TopicId { get; set; }
+        //[Required]
+        public int? TopicId { get; set; }
         public TopicDbTables? Topic { get; set; }
 
     }

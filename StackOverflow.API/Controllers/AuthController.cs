@@ -1,4 +1,5 @@
-﻿using Core.Models;
+﻿using Core.DbModels;
+using Core.Models;
 using Core.Models.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -58,5 +59,13 @@ namespace StackOverflow.API.Controllers
 
             return Ok(response);
        }
+
+        [HttpGet("getUsers")]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await _usersService.GetUsersAsync();
+            
+            return Ok(users);
+        }
      }
 }

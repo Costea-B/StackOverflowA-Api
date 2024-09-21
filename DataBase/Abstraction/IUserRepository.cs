@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Models;
+using Microsoft.AspNetCore.Mvc;
+using Core.DbModels;
 
 namespace DataBase.Abstraction
 {
@@ -13,5 +15,6 @@ namespace DataBase.Abstraction
      {
           Task<UserRegRequest> Register(UserRegRequest user);
           Task<UserModel> LoginUsers(UserLoginRequest  user);
-     }
+        Task<List<UserViewModel>> GetUsersAsync();
+    }
 }

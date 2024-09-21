@@ -5,6 +5,7 @@ using Core.ViewModel;
 using DataBase.Abstraction;
 using DataBase.Context;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataBase.Repositories
@@ -38,5 +39,15 @@ namespace DataBase.Repositories
 
                return new UserModel(auth.Id, auth.Name, auth.Email, auth.Password);
           }
-     }
+
+        public async Task<List<UserViewModel>> GetUsersAsync()
+        {
+            return await _dbContext.UserDbTables.Select(u => new UserViewModel()
+            {
+                Email = u.Email,
+                Name = u.Name,
+                //Job = u.Job,
+            }).ToListAsync();
+        }
+    }
 }

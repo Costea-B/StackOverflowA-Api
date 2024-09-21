@@ -30,7 +30,7 @@ namespace DataBase.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AuthorId")
+                    b.Property<int?>("AuthorId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -41,17 +41,12 @@ namespace DataBase.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("ParentReplyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TopicId")
+                    b.Property<int?>("TopicId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("ParentReplyId");
 
                     b.HasIndex("TopicId");
 
@@ -119,22 +114,14 @@ namespace DataBase.Migrations
                     b.HasOne("Core.DbModels.UsersDbTables", "Author")
                         .WithMany("Replies")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Core.DbModels.ReplyDbTables", "ParentReply")
-                        .WithMany("ChildReplies")
-                        .HasForeignKey("ParentReplyId");
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Core.DbModels.TopicDbTables", "Topic")
                         .WithMany("Replies")
                         .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Author");
-
-                    b.Navigation("ParentReply");
 
                     b.Navigation("Topic");
                 });
@@ -142,17 +129,12 @@ namespace DataBase.Migrations
             modelBuilder.Entity("Core.DbModels.TopicDbTables", b =>
                 {
                     b.HasOne("Core.DbModels.UsersDbTables", "User")
-                        .WithMany()
+                        .WithMany("Topics")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Core.DbModels.ReplyDbTables", b =>
-                {
-                    b.Navigation("ChildReplies");
                 });
 
             modelBuilder.Entity("Core.DbModels.TopicDbTables", b =>
@@ -163,6 +145,8 @@ namespace DataBase.Migrations
             modelBuilder.Entity("Core.DbModels.UsersDbTables", b =>
                 {
                     b.Navigation("Replies");
+
+                    b.Navigation("Topics");
                 });
 #pragma warning restore 612, 618
         }

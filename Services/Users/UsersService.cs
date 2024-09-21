@@ -1,8 +1,10 @@
-﻿using Core.Models;
+﻿using Core.DbModels;
+using Core.Models;
 using Core.Models.Requests;
 using Core.ViewModel;
 using DataBase.Abstraction;
 using DataBase.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Services.Abstractions;
@@ -44,6 +46,11 @@ namespace Services.Users
 
                return _jtw.GenerateJwtToken(users);
           }
-     }
+
+        public async Task<List<UserViewModel>> GetUsersAsync()
+        {
+            return await _usersRepository.GetUsersAsync();
+        }
+    }
 
 }

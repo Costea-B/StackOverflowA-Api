@@ -40,16 +40,16 @@ namespace Services.Topic
 
             return topicDbTable;
         }
-    }
 
-    public async Task<bool> DeleteTopicAsync(int id)
-    {
-         bool status = await _topicRepository.DeleteAsync(id);
-         return status;
-    }
+        public async Task<bool> DeleteTopicAsync(int id)
+        {
+             bool status = await _topicRepository.DeleteAsync(id);
+             return status;
+        }
 
-    public async Task<List<TopicDbTables>> GetTopicsByUserIdAsync(int userId)
-    {
-        return await _topicRepository.GetTopicsByUserIdAsync(userId);
+        public async Task<List<TopicDbTables>> GetTopicsByUserIdAsync(int userId)
+        {
+            return await _topicRepository.GetTopicsByUserIdAsync(userId);
+        }
     }
 }
