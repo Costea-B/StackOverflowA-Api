@@ -16,5 +16,7 @@ namespace DataBase.Repositories
         Task<bool> DeleteAsync(int id);
 
         Task<List<TopicDbTables>> GetTopicsByUserIdAsync(int userId);
+
+        Task<IEnumerable<TopicDbTables>> SearchTopicsAsync(string searchTerm);
     }
 }

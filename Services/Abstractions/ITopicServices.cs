@@ -17,6 +17,7 @@ namespace Services.Abstractions
         Task<bool> DeleteTopicAsync(int id);
 
         Task<List<TopicDbTables>> GetTopicsByUserIdAsync(int userId);
+        Task<IEnumerable<TopicDbTables>> SearchTopicsAsync(string searchTerm);
     }
 
 }

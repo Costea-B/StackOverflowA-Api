@@ -72,5 +72,22 @@ namespace StackOverflow.API.Controllers
             }
             return Ok(topics);
         }
+
+        [HttpGet("SearchTopics")]
+        public async Task<IActionResult> SearchTopics(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return BadRequest("Search term cannot be empty");
+            }
+
+            var topics = await _topicService.SearchTopicsAsync(searchTerm);
+            if (topics == null || !topics.Any())
+            {
+                return NotFound("No topics found");
+            }
+
+            return Ok(topics);
+        }
     }
 }

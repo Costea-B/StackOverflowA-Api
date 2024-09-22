@@ -53,4 +53,9 @@ public class TopicService : ITopicService
     {
         return await _topicRepository.GetTopicsByUserIdAsync(userId);
     }
+
+    public async Task<IEnumerable<TopicDbTables>> SearchTopicsAsync(string searchTerm)
+    {
+        return await _topicRepository.SearchTopicsAsync(searchTerm);
+    }
 }
