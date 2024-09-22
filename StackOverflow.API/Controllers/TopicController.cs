@@ -1,4 +1,4 @@
-﻿using Core.Models;
+﻿using Core.Models.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstractions;

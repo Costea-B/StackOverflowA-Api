@@ -1,5 +1,5 @@
 ﻿using Core.DbModels;
-using Core.Models;
+using Core.Models.Requests;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

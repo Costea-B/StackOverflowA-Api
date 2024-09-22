@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Core.Models;
+using Core.Models.Requests;
 using Core.ViewModel;
 using DataBase.Abstraction;
 using Newtonsoft.Json;

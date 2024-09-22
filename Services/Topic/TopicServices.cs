@@ -1,7 +1,7 @@
 ﻿using Core.DbModels;
-using Core.Models;
 using DataBase.Abstraction;
 using Services.Abstractions;
+using Core.Models.Requests;
 
 namespace Services.Topic
 {
@@ -40,21 +40,23 @@ namespace Services.Topic
 
             return topicDbTable;
         }
+
+        public async Task<bool> DeleteTopicAsync(int id)
+        {
+             bool status = await _topicRepository.DeleteAsync(id);
+             return status;
+          }
+
+        public async Task<List<TopicDbTables>> GetTopicsByUserIdAsync(int userId)
+        {
+             return await _topicRepository.GetTopicsByUserIdAsync(userId);
+          }
+
+        public async Task<IEnumerable<TopicDbTables>> SearchTopicsAsync(string searchTerm)
+        {
+             return await _topicRepository.SearchTopicsAsync(searchTerm);
+          }
     }
 
-    public async Task<bool> DeleteTopicAsync(int id)
-    {
-         bool status = await _topicRepository.DeleteAsync(id);
-         return status;
-    }
-
-    public async Task<List<TopicDbTables>> GetTopicsByUserIdAsync(int userId)
-    {
-        return await _topicRepository.GetTopicsByUserIdAsync(userId);
-    }
-
-    public async Task<IEnumerable<TopicDbTables>> SearchTopicsAsync(string searchTerm)
-    {
-        return await _topicRepository.SearchTopicsAsync(searchTerm);
-    }
+    
 }
