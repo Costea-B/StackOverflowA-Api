@@ -1,46 +1,45 @@
 ﻿using Core.DbModels;
 using Core.Models;
-using DataBase.Repositories;
+using DataBase.Abstraction;
 using Services.Abstractions;
-using Services.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-public class TopicService : ITopicService
+namespace Services.Topic
 {
-    private readonly ITopicRepository _topicRepository;
 
-    public TopicService(ITopicRepository topicRepository)
+    public class TopicService : ITopicService
     {
-        _topicRepository = topicRepository;
-    }
+        private readonly ITopicRepository _topicRepository;
 
-    public async Task<TopicDbTables> GetTopicByIdAsync(int id)
-    {
-        return await _topicRepository.GetByIdAsync(id);
-    }
-
-    public async Task<List<TopicDbTables>> GetAllTopicsAsync()
-    {
-        return await _topicRepository.GetAllAsync();
-    }
-
-    public async Task<TopicDbTables> CreateTopicAsync(CreateTopicRequest request)
-    {
-        var topicDbTable = new TopicDbTables
+        public TopicService(ITopicRepository topicRepository)
         {
-            Title = request.Title,
-            Description = request.Description,
-            Datecreate = DateTime.UtcNow,
-            Tags = request.Tags,
-            UserId = request.UserId
-        };
+            _topicRepository = topicRepository;
+        }
 
-        await _topicRepository.AddAsync(topicDbTable);
+        public async Task<TopicDbTables> GetTopicByIdAsync(int id)
+        {
+            return await _topicRepository.GetByIdAsync(id);
+        }
 
-        return topicDbTable;
+        public async Task<List<TopicDbTables>> GetAllTopicsAsync()
+        {
+            return await _topicRepository.GetAllAsync();
+        }
+
+        public async Task<TopicDbTables> CreateTopicAsync(CreateTopicRequest request)
+        {
+            var topicDbTable = new TopicDbTables
+            {
+                Title = request.Title,
+                Description = request.Description,
+                Datecreate = DateTime.UtcNow,
+                Tags = request.Tags,
+                UserId = request.UserId
+            };
+
+            await _topicRepository.AddAsync(topicDbTable);
+
+            return topicDbTable;
+        }
     }
 
     public async Task<bool> DeleteTopicAsync(int id)

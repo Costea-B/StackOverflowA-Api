@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataBase.Repositories
+namespace DataBase.Abstraction
 {
     public interface ITopicRepository
     {
