@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Core.Models;
 using Core.ViewModel;
 using DataBase.Abstraction;
+using Newtonsoft.Json;
 
 namespace DataBase.Repositories
 {
@@ -92,6 +93,18 @@ namespace DataBase.Repositories
 
             _context.ReplyDbTables.Remove(reply);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task SubmitRatingAsync(int replyId, int rating)
+        {
+            var reply = await _context.ReplyDbTables.FindAsync(replyId);
+            
+            if (reply != null)
+            {
+                reply.Ratings.Add(rating);
+                _context.ReplyDbTables.Update(reply);
+                await _context.SaveChangesAsync();
+            }
         }
        
     }

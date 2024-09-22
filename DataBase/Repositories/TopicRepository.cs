@@ -66,10 +66,11 @@ namespace DataBase.Repositories
         }
 
         public async Task<IEnumerable<TopicDbTables>> SearchTopicsAsync(string searchTerm)
-    {
-        return await _context.TopicDbTables
-            .Where(t => t.Title.Contains(searchTerm) || t.Tags.Any(tag => tag.Contains(searchTerm)))
-            .ToListAsync();
-    }
+        {
+            return await _context.TopicDbTables
+                .Where(t => t.Title.Contains(searchTerm) || t.Tags.Any(tag => tag.Contains(searchTerm)))
+                .ToListAsync();
+        }
+        
     }
 }

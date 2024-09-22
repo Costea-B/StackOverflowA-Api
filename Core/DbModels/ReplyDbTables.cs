@@ -30,6 +30,9 @@ namespace Core.DbModels
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         [Required]
         public int TopicId { get; set; }
+        [Column(TypeName = "json")]
+        public List<int> Ratings { get; set; } = new List<int>();
+
         public TopicDbTables? Topic { get; set; }
 
     }

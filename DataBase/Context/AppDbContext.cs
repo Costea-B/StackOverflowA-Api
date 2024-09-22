@@ -51,6 +51,11 @@ namespace DataBase.Context
                 .HasForeignKey(r => r.TopicId)  // Cheia străină în Reply este TopicId
                 .OnDelete(DeleteBehavior.Cascade);  // La ștergerea unui topic, se șterg toate replies asociate
 
+            // Convertirea de rating pentur db
+            modelBuilder.Entity<ReplyDbTables>()
+                .Property(m => m.Ratings)
+                .HasColumnType("NVARCHAR(MAX)");
+
             base.OnModelCreating(modelBuilder);
           }
     }

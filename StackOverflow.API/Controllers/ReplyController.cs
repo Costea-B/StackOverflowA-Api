@@ -74,5 +74,19 @@ namespace StackOverflow.API.Controllers
                 return NotFound(new { message = ex.Message });
             }
         }
+
+        [HttpPost("{replyId}/rating")]
+        public async Task<IActionResult> SubmitRating(int replyId, [FromBody] int rating)
+        {
+            try
+            {
+                await _replyService.SubmitRatingAsync(replyId, rating);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

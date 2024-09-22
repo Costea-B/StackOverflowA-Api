@@ -17,5 +17,6 @@ namespace Services.Abstractions
         Task<ReplyDbTables> UpdateReplyAsync(int replyId, string newDescription);
         Task<List<ReplyViewModel>> GetRepliesForTopicAsync(int topicId);
         Task DeleteReplyAsync(int replyId);
+        Task SubmitRatingAsync(int replyId, int rating);
     }
 }

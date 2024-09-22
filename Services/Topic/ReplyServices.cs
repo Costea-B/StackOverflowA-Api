@@ -52,5 +52,12 @@ namespace Services.Topic
         {
             await _replyRepository.DeleteAsync(replyId);
         }
+        public async Task SubmitRatingAsync(int replyId, int rating)
+    {
+        if (rating < 1 || rating > 5)
+            throw new ArgumentOutOfRangeException("Rating must be between 1 and 5.");
+
+        await _replyRepository.SubmitRatingAsync(replyId, rating);
+    }
     }
 }
