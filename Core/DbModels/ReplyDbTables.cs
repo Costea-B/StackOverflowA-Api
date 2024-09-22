@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Core.DbModels
@@ -23,6 +24,7 @@ namespace Core.DbModels
         public int Id { get; set; }
         [Required]
         public int? AuthorId { get; set; }
+        [JsonIgnore]
         public UsersDbTables? Author { get; set; }
         [Required]
         [StringLength(500)]
@@ -32,8 +34,8 @@ namespace Core.DbModels
         public int TopicId { get; set; }
         [Column(TypeName = "json")]
         public List<int> Ratings { get; set; } = new List<int>();
-
-        public TopicDbTables? Topic { get; set; }
+        [JsonIgnore]
+          public TopicDbTables? Topic { get; set; }
 
     }
 }

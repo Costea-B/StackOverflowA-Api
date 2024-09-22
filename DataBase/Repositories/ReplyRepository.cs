@@ -25,11 +25,36 @@ namespace DataBase.Repositories
 
         public async Task CreateAsync(ReplyDbTables reply)
         {
-            _context.ReplyDbTables.Add(reply);
-            await _context.SaveChangesAsync();
+             // Găsește utilizatorul și topicul aferent pentru răspunsul curent
+             var user = await _context.UserDbTables.FindAsync(reply.AuthorId);
+             var topic = await _context.TopicDbTables.FindAsync(reply.TopicId);
+
+             // Verifică dacă utilizatorul sau topicul sunt null
+             if (user == null)
+             {
+                  throw new Exception("User not found");
+             }
+             if (topic == null)
+             {
+                  throw new Exception("Topic not found");
+             }
+
+             // Inițializează colecția de răspunsuri dacă nu este inițializată
+             user.Replies ??= new List<ReplyDbTables>();
+             topic.Replies ??= new List<ReplyDbTables>();
+
+             // Adaugă răspunsul în colecțiile utilizatorului și ale topicului
+             user.Replies.Add(reply);
+             topic.Replies.Add(reply);
+
+             // Adaugă răspunsul în baza de date
+             _context.ReplyDbTables.Add(reply);
+
+             // Salvează modificările
+             await _context.SaveChangesAsync();
         }
 
-        public async Task<ReplyDbTables> CreateToReplyAsync(int parentReplyId, CreateReplyRequest request)
+          public async Task<ReplyDbTables> CreateToReplyAsync(int parentReplyId, CreateReplyRequest request)
         {
             var parentReply = await _context.ReplyDbTables.FindAsync(parentReplyId);
             if (parentReply == null)
