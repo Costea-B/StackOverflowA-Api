@@ -14,7 +14,7 @@ namespace StackOverflow.API.Controllers
         {
             _replyService = replyService;
         }
- 
+
         // Obtine un reply după ID
         [HttpGet("{id}")]
         public async Task<IActionResult> GetReplyById([FromRoute] int id)
@@ -26,15 +26,8 @@ namespace StackOverflow.API.Controllers
             }
             return Ok(reply);
         }
- 
-        // Obtine toate reply-urile pentru un anumit topic
-        [HttpGet("topic/{topicId}")]
-        public async Task<IActionResult> GetRepliesForTopic([FromRoute]int topicId)
-        {
-            var replies = await _replyService.GetRepliesForToticAsync(topicId);
-            return Ok(replies);
-        }
- 
+
+
         // Creeaza un reply
         [HttpPost]
         public async Task<IActionResult> CreateReply([FromBody] CreateReplyRequest request)
@@ -43,11 +36,31 @@ namespace StackOverflow.API.Controllers
             {
                 return BadRequest(ModelState);
             }
- 
+
             var newReply = await _replyService.CreateReplyAsync(request);
             return CreatedAtAction(nameof(GetReplyById), new { id = newReply.Id }, newReply);
         }
- 
+
+        // Obtine toate reply-urile pentru un anumit topic
+        [HttpGet("topic/{topicId}")]
+        public async Task<IActionResult> GetRepliesForTopic([FromRoute] int topicId)
+        {
+            var replies = await _replyService.GetRepliesForToticAsync(topicId);
+            return Ok(replies);
+        }
+
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetRepliesByUserId([FromRoute] int userId)
+        {
+            var replies = await _replyService.GetRepliesByUserIdAsync(userId);
+            if (replies == null || replies.Count == 0)
+            {
+                return NotFound(new { message = $"No replies found for user with ID {userId}." });
+            }
+            return Ok(replies);
+        }
+
+
         // Editeaza un reply existent / adauga end-point
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateReply([FromRoute] int id, [FromBody] string newDescription)
@@ -59,7 +72,7 @@ namespace StackOverflow.API.Controllers
             }
             return Ok(newReply);
         }
- 
+
         //sterge un reply
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReply([FromRoute] int id)

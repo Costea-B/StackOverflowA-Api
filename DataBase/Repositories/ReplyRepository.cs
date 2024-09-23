@@ -50,7 +50,6 @@ namespace DataBase.Repositories
 
         public async Task<ReplyDbTables> GetByIdAsync(int id)
         {
-           //  await _context.Database.MigrateAsync();
             var reply = await _context.ReplyDbTables.FindAsync(id);
             if (reply == null)
             {
@@ -93,6 +92,12 @@ namespace DataBase.Repositories
             _context.ReplyDbTables.Remove(reply);
             await _context.SaveChangesAsync();
         }
-       
+
+        public async Task<List<ReplyViewModel>> GetByUserIdAsync(int userId)
+        {
+            var reply = await _context.ReplyDbTables.Where(r => r.AuthorId == userId).ToListAsync();
+            var replyViewModels = reply.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.Description, r.CreatedAt)).ToList();
+            return replyViewModels;
+        }
     }
 }

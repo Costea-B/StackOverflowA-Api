@@ -52,5 +52,10 @@ namespace Services.Topic
         {
             await _replyRepository.DeleteAsync(replyId);
         }
+
+        public async Task<List<ReplyViewModel>> GetRepliesByUserIdAsync(int userId)
+        {
+            return await _replyRepository.GetByUserIdAsync(userId);
+        }
     }
 }

@@ -24,6 +24,5 @@ namespace Core.ViewModel
         public DateTime CreatedAt { get; set; } 
         public int TopicId { get; set; }
         public string AuthorName { get; set; }
-       
     }
 }
