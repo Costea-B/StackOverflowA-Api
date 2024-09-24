@@ -12,9 +12,9 @@ namespace DataBase.Abstraction
     public interface IReplyRepository
     {
         Task CreateAsync(ReplyDbTables reply);
-        Task<ReplyDbTables> GetByIdAsync(int replyId);
+        Task<ReplyViewModel> GetByIdAsync(int replyId);
         Task<List<ReplyViewModel>> GetByUserIdAsync(int userId);
-        Task<List<ReplyDbTables>> GetAllForTopicAsync(int topicId);
+        Task<List<ReplyViewModel>> GetAllForTopicAsync(int topicId);
         Task<ReplyDbTables> UpdateAsync(int replyId, string newDescription);
         Task<List<ReplyViewModel>> GetRepliesAsync(int topicId);
         Task DeleteAsync(int replyId);

@@ -28,12 +28,12 @@ namespace Services.Topic
             return newReply;
         }
 
-        public async Task<ReplyDbTables> GetReplyByIdAsync(int id)
+        public async Task<ReplyViewModel> GetReplyByIdAsync(int id)
         {
             return await _replyRepository.GetByIdAsync(id);
         }
 
-        public async Task<List<ReplyDbTables>> GetRepliesForToticAsync(int topicId)
+        public async Task<List<ReplyViewModel>> GetRepliesForToticAsync(int topicId)
         {
             return await _replyRepository.GetAllForTopicAsync(topicId);
         }

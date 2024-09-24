@@ -12,8 +12,8 @@ namespace Services.Abstractions
     public interface IReplyService
     {
         Task<ReplyDbTables> CreateReplyAsync(CreateReplyRequest request);
-        Task<ReplyDbTables> GetReplyByIdAsync(int id);
-        Task<List<ReplyDbTables>> GetRepliesForToticAsync(int topicId);
+        Task<ReplyViewModel> GetReplyByIdAsync(int id);
+        Task<List<ReplyViewModel>> GetRepliesForToticAsync(int topicId);
         Task<ReplyDbTables> UpdateReplyAsync(int replyId, string newDescription);
         Task<List<ReplyViewModel>> GetRepliesForTopicAsync(int topicId);
         Task<List<ReplyViewModel>> GetRepliesByUserIdAsync(int userId);

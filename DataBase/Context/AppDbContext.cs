@@ -25,6 +25,7 @@ namespace DataBase.Context
                 .HasOne(r => r.Topic)          //Crearea relatiei unu la mai multe un raspuns e la un topic
                 .WithMany(t => t.Replies)      //un topic poate avea mai multe raspunsuri     
                 .HasForeignKey(r => r.TopicId) // cheaia straina pentru relatii poate exista HashKey() cheie primara din acelasi tabel 
+                /*.IsRequired()*/ //Consider ca este nevoie ca un reply in totdeauna sa contina un topic , pe cand poate sa existe fara un user
                 .OnDelete(DeleteBehavior.Cascade);         // Stergerea unui topic va sterge toate raspunsurile acestuia 
 
             //Configurarea relatiei intre User si Topic

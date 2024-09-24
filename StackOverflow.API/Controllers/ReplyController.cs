@@ -46,6 +46,10 @@ namespace StackOverflow.API.Controllers
         public async Task<IActionResult> GetRepliesForTopic([FromRoute] int topicId)
         {
             var replies = await _replyService.GetRepliesForToticAsync(topicId);
+            if (replies == null || replies.Count == 0)
+            {
+                return NotFound(new { message = $"No replies found for topic with ID {topicId}." });
+            }
             return Ok(replies);
         }
 

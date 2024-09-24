@@ -42,28 +42,40 @@ namespace DataBase.Repositories
             return newReply;
         }
 
-        public async Task<List<ReplyDbTables>> GetAllForTopicAsync(int topicId)
+        public async Task<List<ReplyViewModel>> GetAllForTopicAsync(int topicId)
         {
-            var replies = await _context.ReplyDbTables.Where(r => r.TopicId == topicId).ToListAsync();
-            return replies;
+            var replies = await _context.ReplyDbTables
+                .Include(r => r.Author)
+                .Include(r => r.Topic)
+                .Where(r => r.TopicId == topicId)
+                .ToListAsync();
+            var replyViewModels = replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.TopicId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Topic.Title)).ToList();
+            return replyViewModels;
         }
 
-        public async Task<ReplyDbTables> GetByIdAsync(int id)
+        public async Task<ReplyViewModel> GetByIdAsync(int id)
         {
-            var reply = await _context.ReplyDbTables.FindAsync(id);
+            var reply = await _context.ReplyDbTables
+                .Include(r => r.Author)
+                .Include(r => r.Topic)
+                .FirstOrDefaultAsync(r => r.Id == id);
+
             if (reply == null)
             {
                 throw new Exception($"Reply with ID {id} not found.");
             }
-            return reply;
+            var replyViewModel = new ReplyViewModel(reply.Id, reply.AuthorId,reply.TopicId, reply.Description, reply.CreatedAt, reply.Author?.Name ?? "Unknown Author", reply.Topic.Title);
+            return replyViewModel;
         }
 
         public async Task<List<ReplyViewModel>> GetRepliesAsync(int topicId)
         {
             var replies = await _context.ReplyDbTables
+                .Include(r => r.Author)
+                .Include(r => r.Topic)
                 .Where(r => r.TopicId == topicId)
                 .ToListAsync();
-            var replyViewModels = replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.Description, r.CreatedAt)).ToList();
+            var replyViewModels = replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.TopicId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Topic.Title)).ToList();
 
             return replyViewModels;
         }
@@ -95,8 +107,12 @@ namespace DataBase.Repositories
 
         public async Task<List<ReplyViewModel>> GetByUserIdAsync(int userId)
         {
-            var reply = await _context.ReplyDbTables.Where(r => r.AuthorId == userId).ToListAsync();
-            var replyViewModels = reply.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.Description, r.CreatedAt)).ToList();
+            var reply = await _context.ReplyDbTables
+                .Include(r => r.Author)
+                .Include(r => r.Topic)
+                .Where(r => r.AuthorId == userId)
+                .ToListAsync();
+            var replyViewModels = reply.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.TopicId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Topic.Title)).ToList();
             return replyViewModels;
         }
     }

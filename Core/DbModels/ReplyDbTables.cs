@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Core.DbModels
@@ -22,6 +23,7 @@ namespace Core.DbModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int? AuthorId { get; set; }
+        [JsonIgnore]
         public UsersDbTables? Author { get; set; }
         [Required]
         [StringLength(500)]
@@ -29,6 +31,7 @@ namespace Core.DbModels
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         [Required]
         public int TopicId { get; set; }
+        [JsonIgnore]
         public TopicDbTables? Topic { get; set; }
 
     }
