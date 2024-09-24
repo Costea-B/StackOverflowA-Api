@@ -2,7 +2,9 @@
 using System.Security.Claims;
 using System.Text;
 using Core.Models;
+using Microsoft.EntityFrameworkCore.Storage.Json;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 
 namespace Services.Users
 {
@@ -43,6 +45,26 @@ namespace Services.Users
                var takenValue = new JwtSecurityTokenHandler().WriteToken(token);
 
                return takenValue;
+          }
+
+
+          public int GetUserId(string jwttoken)
+          {
+
+               if (jwttoken != null)
+               {
+                    var tokenhendler = new JwtSecurityTokenHandler();
+                    var jwt = tokenhendler.ReadJwtToken(jwttoken);
+                    var userid = jwt.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
+
+
+                    var id = Int32.Parse(userid);
+
+                    return id;
+               }
+
+               throw new Exception("");
+
           }
      }
 }

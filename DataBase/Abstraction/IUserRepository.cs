@@ -13,5 +13,7 @@ namespace DataBase.Abstraction
      {
           Task<UserRegRequest> Register(UserRegRequest user);
           Task<UserModel> LoginUsers(UserLoginRequest  user);
+
+          Task<UserModel> GetUser(int id);
      }
 }

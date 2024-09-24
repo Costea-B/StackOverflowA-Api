@@ -29,6 +29,8 @@ builder.Services.AddScoped<IReplyRepository, ReplyRepository>();
 builder.Services.AddScoped<PasswordHash>();
 builder.Services.AddScoped<IPasswordHash, PasswordHash>();
 builder.Services.AddScoped<JwtProvid>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<CurrentUserServices>();
 
 builder.Services.AddCors(option =>
 {

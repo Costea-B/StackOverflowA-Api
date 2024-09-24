@@ -38,5 +38,11 @@ namespace DataBase.Repositories
 
                return new UserModel(auth.Id, auth.Name, auth.Email, auth.Password);
           }
+
+          public async Task<UserModel> GetUser(int id)
+          {
+               var user =  await _dbContext.UserDbTables.FirstOrDefaultAsync(u => u.Id == id);
+               return new UserModel(user.Id, user.Name, user.Email, user.Password);
+          }
      }
 }

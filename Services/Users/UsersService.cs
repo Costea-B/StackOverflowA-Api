@@ -44,6 +44,11 @@ namespace Services.Users
 
                return _jtw.GenerateJwtToken(users);
           }
+
+          public async Task<UserModel> GetUserById(int id)
+          {
+               return await _usersRepository.GetUser(id);
+          }
      }
 
 }

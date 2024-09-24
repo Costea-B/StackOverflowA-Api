@@ -1,5 +1,7 @@
-﻿using Core.Models;
+﻿using System.IdentityModel.Tokens.Jwt;
+using Core.Models;
 using Core.Models.Requests;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +15,30 @@ namespace StackOverflow.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUsersServices _usersService;
-        public AuthController(IUsersServices usersServices) 
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly JwtProvid _jwtProvid;
+        private readonly CurrentUserServices _current;
+        
+        public AuthController(IUsersServices usersServices, IHttpContextAccessor accessor, JwtProvid jwtProvid, CurrentUserServices current) 
         {
             _usersService = usersServices;
-        } 
+            _contextAccessor = accessor;
+            _jwtProvid = jwtProvid;
+            _current = current;
+        }
 
+
+        [HttpGet("getUser/me")]
+        public async Task<IActionResult> GetUser()
+        {
+             var currentUser = new
+             {
+                  UserName = _current.UserName,
+                  UserId = _current.UserId,
+             };
+
+             return Ok(currentUser);
+          }
         
        [HttpPost("login")]
        [AllowAnonymous]

@@ -45,8 +45,9 @@ public class JwtMiddleware
                           var tokenHandler = new JwtSecurityTokenHandler();
                           var jwtToken = tokenHandler.ReadJwtToken(token);
                           var userName = jwtToken.Claims.FirstOrDefault(c => c.Type == "userName")?.Value;
+                          var userId = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
 
-                          if (userName == null)
+                              if (userName == null)
                           {
                                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                                await context.Response.WriteAsync("Invalid Token: Missing userName claim");
@@ -68,8 +69,9 @@ public class JwtMiddleware
                           var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
 
 
-                          context.Items["User"] = claimsPrincipal;
-                         }
+                          context.Items["User"] = userName;
+                              context.Items["userId"] = userId;
+                     }
                 }
                 catch(Exception ex) 
                 {
