@@ -8,6 +8,5 @@ namespace Services.Abstractions
      {
           Task<string> Login(UserLoginRequest users);
           Task<UserRegRequest> Register(UserRegRequest user);
-          Task<UserModel> GetUserById(int id);
      }
 }

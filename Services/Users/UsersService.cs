@@ -18,7 +18,7 @@ namespace Services.Users
           private readonly IPasswordHash _passwordHash;
 
          
-          public UsersServices(UsersRepository usersRepository, JwtProvid jwt ,  IPasswordHash passwordHash)
+          public UsersServices(IUserRepository usersRepository, JwtProvid jwt ,  IPasswordHash passwordHash)
           {
                _usersRepository = usersRepository;
                _jtw=jwt;
@@ -44,11 +44,7 @@ namespace Services.Users
 
                return _jtw.GenerateJwtToken(users);
           }
-
-          public async Task<UserModel> GetUserById(int id)
-          {
-               return await _usersRepository.GetUser(id);
-          }
+          
      }
 
 }

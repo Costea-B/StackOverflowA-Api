@@ -46,25 +46,6 @@ namespace Services.Users
 
                return takenValue;
           }
-
-
-          public int GetUserId(string jwttoken)
-          {
-
-               if (jwttoken != null)
-               {
-                    var tokenhendler = new JwtSecurityTokenHandler();
-                    var jwt = tokenhendler.ReadJwtToken(jwttoken);
-                    var userid = jwt.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
-
-
-                    var id = Int32.Parse(userid);
-
-                    return id;
-               }
-
-               throw new Exception("");
-
-          }
+          
      }
 }

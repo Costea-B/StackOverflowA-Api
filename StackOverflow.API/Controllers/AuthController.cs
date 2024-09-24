@@ -31,27 +31,15 @@ namespace StackOverflow.API.Controllers
         [HttpGet("getUser/me")]
         public async Task<IActionResult> GetUser()
         {
-             var currentUser = new
-             {
-                  UserName = _current.UserName,
-                  UserId = _current.UserId,
-             };
-
-             return Ok(currentUser);
-          }
+             var currentUser = await _current.GetUser();
+             return Ok(new{currentUser});
+        }
         
        [HttpPost("login")]
        [AllowAnonymous]
        public async Task<IActionResult> login([FromBody] UserLoginRequest userModel)
        {
            var token = await _usersService.Login(userModel);
-       
-       //       if (user == null)
-       //       {
-       //           return Unauthorized(new { message = "Invalid credentials" });
-       //       }
-       //       
-       //   var token = _jwtProvid.GenerateJwtToken(user);
 
        if (token == null)
        {

@@ -22,6 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options
 
 builder.Services.AddScoped<UsersRepository>();
 builder.Services.AddScoped<IUsersServices, UsersServices>();
+builder.Services.AddScoped<IUserRepository, UsersRepository>();
 builder.Services.AddScoped<ITopicService, TopicService>();
 builder.Services.AddScoped<ITopicRepository, TopicRepository>();
 builder.Services.AddScoped<IReplyService, ReplyServices>();

@@ -67,10 +67,8 @@ public class JwtMiddleware
                           };
 
                           var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
-
-
-                          context.Items["User"] = userName;
-                              context.Items["userId"] = userId;
+                         
+                          context.Items["userId"] = userId;
                      }
                 }
                 catch(Exception ex) 

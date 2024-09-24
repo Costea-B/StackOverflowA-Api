@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.ViewModel;
 
 namespace Services.Abstractions
 {
-     public class ICurrentUserServices
+     public interface ICurrentUserServices
      {
-          public string UserName { get; }
-          public int UserId { get; }
+          Task<UserViewModel> GetUser();
      }
 }
