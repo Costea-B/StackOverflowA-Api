@@ -1,4 +1,7 @@
 ﻿using Core.DbModels;
+using Core.Models;
+using Core.ViewModel;
+using DataBase.Repositories;
 using DataBase.Abstraction;
 using Services.Abstractions;
 using Core.Models.Requests;
@@ -15,31 +18,33 @@ namespace Services.Topic
             _topicRepository = topicRepository;
         }
 
-        public async Task<TopicDbTables> GetTopicByIdAsync(int id)
+    public async Task<TopicViewModel> GetTopicByIdAsync(int id)
+    {
+        return await _topicRepository.GetByIdAsync(id);
+    }
+
+    public async Task<List<TopicViewModel>> GetAllTopicsAsync()
+    {
+        return await _topicRepository.GetAllAsync();
+    }
+
+    public async Task<TopicViewModel> CreateTopicAsync(CreateTopicRequest request)
+    {
+        var newTopic = new TopicDbTables
         {
-            return await _topicRepository.GetByIdAsync(id);
-        }
+            Title = request.Title,
+            Description = request.Description,
+            Datecreate = DateTime.UtcNow,
+            Tags = request.Tags,
+            UserId = request.UserId
+        };
 
-        public async Task<List<TopicDbTables>> GetAllTopicsAsync()
-        {
-            return await _topicRepository.GetAllAsync();
-        }
+        await _topicRepository.AddAsync(newTopic);
 
-        public async Task<TopicDbTables> CreateTopicAsync(CreateTopicRequest request)
-        {
-            var topicDbTable = new TopicDbTables
-            {
-                Title = request.Title,
-                Description = request.Description,
-                Datecreate = DateTime.UtcNow,
-                Tags = request.Tags,
-                UserId = request.UserId
-            };
+        var topicViewModel = await _topicRepository.GetByIdAsync(newTopic.Id);
 
-            await _topicRepository.AddAsync(topicDbTable);
-
-            return topicDbTable;
-        }
+        return topicViewModel;
+    }
 
         public async Task<bool> DeleteTopicAsync(int id)
         {
@@ -47,16 +52,8 @@ namespace Services.Topic
              return status;
           }
 
-        public async Task<List<TopicDbTables>> GetTopicsByUserIdAsync(int userId)
-        {
-             return await _topicRepository.GetTopicsByUserIdAsync(userId);
-          }
-
-        public async Task<IEnumerable<TopicDbTables>> SearchTopicsAsync(string searchTerm)
-        {
-             return await _topicRepository.SearchTopicsAsync(searchTerm);
-          }
+    public async Task<List<TopicViewModel>> GetTopicsByUserIdAsync(int userId)
+    {
+        return await _topicRepository.GetTopicsByUserIdAsync(userId);
     }
-
-    
 }
