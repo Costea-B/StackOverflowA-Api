@@ -119,12 +119,24 @@ namespace DataBase.Repositories
             return topicViewModel;
         }
 
-        public async Task<IEnumerable<TopicDbTables>> SearchTopicsAsync(string searchTerm)
+        public async Task<IEnumerable<TopicViewModel>> SearchTopicsAsync(string searchTerm)
         {
-            return await _context.TopicDbTables
-                .Where(t => t.Title.Contains(searchTerm) || t.Tags.Any(tag => tag.Contains(searchTerm)))
+            var topics = await _context.TopicDbTables
+                .Where(t => t.Title.Contains(searchTerm) )
                 .ToListAsync();
-        }
+
+               var topicViewModel = topics.Select(topic => new TopicViewModel
+               {
+                    Id = topic.Id,
+                    Title = topic.Title,
+                    Description = topic.Description,
+                    Tags = topic.Tags,
+                    User = new UserViewModel(topic.User.Id, topic.User.Email, topic.User.Name),
+                    Replies = topic.Replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.TopicId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Topic.Title)).ToList()
+               }).ToList();
+
+               return topicViewModel;
+          }
         
     }
 }

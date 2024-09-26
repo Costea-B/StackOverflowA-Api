@@ -6,6 +6,8 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Models.Requests;
+using Core.ViewModel;
 
 namespace Services.Abstractions
 {
@@ -16,8 +18,8 @@ namespace Services.Abstractions
         Task<TopicViewModel> CreateTopicAsync(CreateTopicRequest request);
         Task<bool> DeleteTopicAsync(int id);
 
-        Task<List<TopicDbTables>> GetTopicsByUserIdAsync(int userId);
-        Task<IEnumerable<TopicDbTables>> SearchTopicsAsync(string searchTerm);
+        Task<List<TopicViewModel>> GetTopicsByUserIdAsync(int userId);
+        Task<IEnumerable<TopicViewModel>> SearchTopicsAsync(string searchTerm);
     }
 
 }

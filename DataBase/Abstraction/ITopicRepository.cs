@@ -14,9 +14,8 @@ namespace DataBase.Abstraction
         Task<TopicViewModel> GetByIdAsync(int id);
         Task<List<TopicViewModel>> GetAllAsync();
         Task AddAsync(TopicDbTables topic);
-
         Task<bool> DeleteAsync(int id);
-
+        Task<IEnumerable<TopicViewModel>> SearchTopicsAsync(string searchTerm);
         Task<List<TopicViewModel>> GetTopicsByUserIdAsync(int userId);
     }
 }
