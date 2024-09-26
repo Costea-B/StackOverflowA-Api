@@ -25,32 +25,8 @@ namespace DataBase.Repositories
 
         public async Task CreateAsync(ReplyDbTables reply)
         {
-             // Găsește utilizatorul și topicul aferent pentru răspunsul curent
-             var user = await _context.UserDbTables.FindAsync(reply.AuthorId);
-             var topic = await _context.TopicDbTables.FindAsync(reply.TopicId);
-
-             // Verifică dacă utilizatorul sau topicul sunt null
-             if (user == null)
-             {
-                  throw new Exception("User not found");
-             }
-             if (topic == null)
-             {
-                  throw new Exception("Topic not found");
-             }
-
-             // Inițializează colecția de răspunsuri dacă nu este inițializată
-             user.Replies ??= new List<ReplyDbTables>();
-             topic.Replies ??= new List<ReplyDbTables>();
-
-             // Adaugă răspunsul în colecțiile utilizatorului și ale topicului
-             user.Replies.Add(reply);
-             topic.Replies.Add(reply);
-
-             // Adaugă răspunsul în baza de date
+            
              _context.ReplyDbTables.Add(reply);
-
-             // Salvează modificările
              await _context.SaveChangesAsync();
         }
 
@@ -132,7 +108,19 @@ namespace DataBase.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<ReplyViewModel>> GetByUserIdAsync(int userId)
+        public async Task SubmitRatingAsync(int replyId, int rating)
+        {
+             var reply = await _context.ReplyDbTables.FindAsync(replyId);
+
+             if (reply != null)
+             {
+                  reply.Ratings.Add(rating);
+                  _context.ReplyDbTables.Update(reply);
+                  await _context.SaveChangesAsync();
+             }
+        }
+
+          public async Task<List<ReplyViewModel>> GetByUserIdAsync(int userId)
         {
             var reply = await _context.ReplyDbTables
                 .Include(r => r.Author)
