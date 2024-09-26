@@ -31,7 +31,7 @@ namespace Services.Topic
                return topics.Select(topic => new AllTopicViewModel(topic)).ToList();
           }
 
-          public async Task<TopicViewModel> CreateTopicAsync(CreateTopicRequest request)
+          public async Task<int> CreateTopicAsync(CreateTopicRequest request)
           {
                var newTopic = new TopicDbTables
                {
@@ -42,11 +42,11 @@ namespace Services.Topic
                     UserId = request.UserId
                };
 
-               await _topicRepository.AddAsync(newTopic);
+               var topicId = await _topicRepository.AddAsync(newTopic);
 
-               var topicViewModel = await _topicRepository.GetByIdAsync(newTopic.Id);
+               
 
-               return topicViewModel;
+               return topicId;
           }
 
           public async Task<bool> DeleteTopicAsync(int id)

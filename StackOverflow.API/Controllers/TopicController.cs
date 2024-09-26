@@ -47,7 +47,7 @@ namespace StackOverflow.API.Controllers
             }
 
             var createdTopic = await _topicService.CreateTopicAsync(request);
-            return CreatedAtAction(nameof(GetTopicById), new { id = createdTopic.Id }, createdTopic);
+            return Ok(new {id = createdTopic});
         }
 
         [HttpDelete("{id}")]

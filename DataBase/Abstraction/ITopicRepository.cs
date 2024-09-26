@@ -13,7 +13,7 @@ namespace DataBase.Abstraction
     {
         Task<TopicViewModel> GetByIdAsync(int id);
         Task<List<TopicDbTables>> GetAllAsync();
-        Task AddAsync(TopicDbTables topic);
+        Task<int> AddAsync(TopicDbTables topic);
         Task<bool> DeleteAsync(int id);
         Task<IEnumerable<TopicViewModel>> SearchTopicsAsync(string searchTerm);
         Task<List<TopicViewModel>> GetTopicsByUserIdAsync(int userId);

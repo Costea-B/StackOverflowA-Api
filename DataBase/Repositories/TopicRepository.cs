@@ -63,10 +63,11 @@ namespace DataBase.Repositories
             return topics;
         }
 
-        public async Task AddAsync(TopicDbTables topic)
+        public async Task<int> AddAsync(TopicDbTables topic)
         {
             _context.TopicDbTables.Add(topic);
             await _context.SaveChangesAsync();
+            return topic.Id;
         }
 
         public async Task<bool> DeleteAsync(int id)

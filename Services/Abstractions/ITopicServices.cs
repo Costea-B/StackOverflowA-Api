@@ -17,7 +17,7 @@ namespace Services.Abstractions
     {
         Task<TopicViewModel> GetTopicByIdAsync(int id);
         Task<List<AllTopicViewModel>> GetAllTopicsAsync();
-        Task<TopicViewModel> CreateTopicAsync(CreateTopicRequest request);
+        Task<int> CreateTopicAsync(CreateTopicRequest request);
         Task<bool> DeleteTopicAsync(int id);
 
         Task<List<TopicViewModel>> GetTopicsByUserIdAsync(int userId);
