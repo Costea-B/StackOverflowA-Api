@@ -13,6 +13,6 @@ namespace Core.DbModels
 
           public UsersDbTables User { get; set; }
           public int UserId { get; set; }
-          public ICollection<ReplyDbTables> Replies { get; set; } = new List<ReplyDbTables>();
+          public ICollection<ReplyDbTables> Replies { get; set; } 
     }
 }
