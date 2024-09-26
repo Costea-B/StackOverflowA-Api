@@ -15,18 +15,13 @@ namespace StackOverflow.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUsersServices _usersService;
-        private readonly IHttpContextAccessor _contextAccessor;
-        private readonly JwtProvid _jwtProvid;
         private readonly CurrentUserServices _current;
         
-        public AuthController(IUsersServices usersServices, IHttpContextAccessor accessor, JwtProvid jwtProvid, CurrentUserServices current) 
+        public AuthController(IUsersServices usersServices, CurrentUserServices current) 
         {
             _usersService = usersServices;
-            _contextAccessor = accessor;
-            _jwtProvid = jwtProvid;
             _current = current;
         }
-
 
         [HttpGet("getUser/me")]
         public async Task<IActionResult> GetUser()
