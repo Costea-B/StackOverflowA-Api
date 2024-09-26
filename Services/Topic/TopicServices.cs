@@ -5,6 +5,8 @@ using DataBase.Repositories;
 using DataBase.Abstraction;
 using Services.Abstractions;
 using Core.Models.Requests;
+using Core.Models;
+using Core.ViewModel;
 
 namespace Services.Topic
 {

@@ -1,4 +1,6 @@
 ﻿using Core.DbModels;
+using Core.Models.Requests;
+using Core.ViewModel;
 using Core.Models;
 using System;
 using System.Collections.Generic;
