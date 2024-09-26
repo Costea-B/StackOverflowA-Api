@@ -15,6 +15,7 @@ namespace Core.ViewModel
                Id = topic.Id;
                Title = topic.Title;
                Description = topic.Description ?? string.Empty;
+               Datecreate = topic.Datecreate;
                Tags = topic.Tags;
                ResponseCount = topic.Replies.Count;
           }
@@ -22,6 +23,7 @@ namespace Core.ViewModel
           public int Id { get; set; }
           public string? Title { get; set; }
           public string Description { get; set; }
+          public DateTime Datecreate { get; set; }
           public IList<string> Tags { get; set; }
           public int ResponseCount { get; set; }
      }
