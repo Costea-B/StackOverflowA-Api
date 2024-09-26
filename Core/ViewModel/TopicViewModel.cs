@@ -1,4 +1,5 @@
-﻿using Core.Models;
+﻿using Core.DbModels;
+using Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,10 @@ namespace Core.ViewModel
           public string Description { get; set; }
           public DateTime Datecreate { get; set; }
           public IList<string> Tags { get; set; }
-          public UserModel User { get; set; }
+          public UserViewModel User { get; set; }
           public int UserId { get; set; }
-     }
+          public List<ReplyViewModel> Replies { get; set; }
+    }
 }
+
+
