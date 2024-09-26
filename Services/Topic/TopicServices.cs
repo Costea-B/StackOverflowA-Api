@@ -25,9 +25,10 @@ namespace Services.Topic
                return await _topicRepository.GetByIdAsync(id);
           }
 
-          public async Task<List<TopicViewModel>> GetAllTopicsAsync()
+          public async Task<List<AllTopicViewModel>> GetAllTopicsAsync()
           {
-               return await _topicRepository.GetAllAsync();
+               var topics = await _topicRepository.GetAllAsync();
+               return topics.Select(topic => new AllTopicViewModel(topic)).ToList();
           }
 
           public async Task<TopicViewModel> CreateTopicAsync(CreateTopicRequest request)

@@ -16,7 +16,7 @@ namespace Services.Abstractions
     public interface ITopicService
     {
         Task<TopicViewModel> GetTopicByIdAsync(int id);
-        Task<List<TopicViewModel>> GetAllTopicsAsync();
+        Task<List<AllTopicViewModel>> GetAllTopicsAsync();
         Task<TopicViewModel> CreateTopicAsync(CreateTopicRequest request);
         Task<bool> DeleteTopicAsync(int id);
 

@@ -50,7 +50,7 @@ namespace DataBase.Repositories
         }
 
 
-        public async Task<List<TopicViewModel>> GetAllAsync()
+        public async Task<List<TopicDbTables>> GetAllAsync()
         {
             var topics = await _context.TopicDbTables
                 .Include(t => t.User)
@@ -58,21 +58,9 @@ namespace DataBase.Repositories
                     .ThenInclude(r => r.Author)
                 .ToListAsync();
 
-            if (topics == null)
-            {
-                throw new KeyNotFoundException("No topics found.");
-            }
-            var topicViewModel = topics.Select(topic => new TopicViewModel
-            {
-                Id = topic.Id,
-                Title = topic.Title,
-                Description = topic.Description,
-                Tags = topic.Tags,
-                User = new UserViewModel(topic.User.Id, topic.User.Email, topic.User.Name),
-                Replies = topic.Replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.TopicId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Topic.Title)).ToList()
-            }).ToList();
+            
 
-            return topicViewModel;
+            return topics;
         }
 
         public async Task AddAsync(TopicDbTables topic)

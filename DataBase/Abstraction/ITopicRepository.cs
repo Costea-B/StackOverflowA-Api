@@ -12,7 +12,7 @@ namespace DataBase.Abstraction
     public interface ITopicRepository
     {
         Task<TopicViewModel> GetByIdAsync(int id);
-        Task<List<TopicViewModel>> GetAllAsync();
+        Task<List<TopicDbTables>> GetAllAsync();
         Task AddAsync(TopicDbTables topic);
         Task<bool> DeleteAsync(int id);
         Task<IEnumerable<TopicViewModel>> SearchTopicsAsync(string searchTerm);
