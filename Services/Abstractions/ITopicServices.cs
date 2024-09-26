@@ -1,5 +1,6 @@
 ﻿using Core.DbModels;
 using Core.Models.Requests;
+using Core.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,7 +13,7 @@ namespace Services.Abstractions
     public interface ITopicService
     {
         Task<TopicDbTables> GetTopicByIdAsync(int id);
-        Task<List<TopicDbTables>> GetAllTopicsAsync();
+        Task<List<TopicViewModel>> GetAllTopicsAsync();
         Task<TopicDbTables> CreateTopicAsync(CreateTopicRequest request);
         Task<bool> DeleteTopicAsync(int id);
 

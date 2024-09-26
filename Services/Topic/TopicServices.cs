@@ -2,6 +2,8 @@
 using DataBase.Abstraction;
 using Services.Abstractions;
 using Core.Models.Requests;
+using Core.Models;
+using Core.ViewModel;
 
 namespace Services.Topic
 {
@@ -20,17 +22,18 @@ namespace Services.Topic
             return await _topicRepository.GetByIdAsync(id);
         }
 
-        public async Task<List<TopicDbTables>> GetAllTopicsAsync()
+        public async Task<List<TopicViewModel>> GetAllTopicsAsync()
         {
-            return await _topicRepository.GetAllAsync();
+            var topics = await _topicRepository.GetAllAsync();
+            return topics.Select(topic => new TopicViewModel(topic)).ToList();
         }
 
         public async Task<TopicDbTables> CreateTopicAsync(CreateTopicRequest request)
         {
             var topicDbTable = new TopicDbTables
             {
-                Title = request.Title,
-                Description = request.Description,
+                Title = request.Title ?? string.Empty,
+                Description = request.Description ?? string.Empty,
                 Datecreate = DateTime.UtcNow,
                 Tags = request.Tags,
                 UserId = request.UserId
