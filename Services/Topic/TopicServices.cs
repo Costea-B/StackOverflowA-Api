@@ -31,7 +31,7 @@ namespace Services.Topic
                return topics.Select(topic => new AllTopicViewModel(topic)).ToList();
           }
 
-          public async Task<int> CreateTopicAsync(CreateTopicRequest request)
+          public async Task<int> CreateTopicAsync(CreateTopicRequest request, int userId)
           {
                var newTopic = new TopicDbTables
                {
@@ -39,7 +39,7 @@ namespace Services.Topic
                     Description = request.Description,
                     Datecreate = DateTime.UtcNow,
                     Tags = request.Tags,
-                    UserId = request.UserId
+                    UserId = userId
                };
 
                var topicId = await _topicRepository.AddAsync(newTopic);

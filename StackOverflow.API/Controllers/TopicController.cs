@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstractions;
+using Services.Users;
 
 
 namespace StackOverflow.API.Controllers
@@ -11,10 +12,12 @@ namespace StackOverflow.API.Controllers
     public class TopicController : ControllerBase
     {
         private readonly ITopicService _topicService;
+        private readonly CurrentUserServices _current;
 
-        public TopicController(ITopicService topicService)
+          public TopicController(ITopicService topicService, CurrentUserServices current)
         {
             _topicService = topicService;
+            _current = current;
         }
 
         [HttpGet("{id}")]
@@ -46,7 +49,7 @@ namespace StackOverflow.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var createdTopic = await _topicService.CreateTopicAsync(request);
+            var createdTopic = await _current.CreateTopic(request);
             return Ok(new {id = createdTopic});
         }
 
