@@ -8,6 +8,7 @@ using Core.ViewModel;
 using DataBase.Abstraction;
 using Microsoft.AspNetCore.Http;
 using Services.Abstractions;
+using Services.Topic;
 
 namespace Services.Users
 {
@@ -15,13 +16,13 @@ namespace Services.Users
      {
           private readonly IHttpContextAccessor _httpContextAccessor;
           private readonly IUserRepository _userRepository;
-          private readonly ITopicService _topicRepository;
+          private readonly ITopicService _topicService;
 
           public CurrentUserServices(IHttpContextAccessor httpContextAccessor, IUserRepository repository, ITopicService topic)
           {
                _httpContextAccessor = httpContextAccessor;
                _userRepository = repository;
-               _topicRepository = topic;
+               _topicService = topic;
           }
 
 
@@ -35,8 +36,15 @@ namespace Services.Users
           public async Task<int> CreateTopic(CreateTopicRequest request)
           {
                var userIdClaim = _httpContextAccessor.HttpContext?.Items["userId"]?.ToString();
-               var topicId = await _topicRepository.CreateTopicAsync(request, Int32.Parse(userIdClaim));
+               var topicId = await _topicService.CreateTopicAsync(request, Int32.Parse(userIdClaim));
                return topicId;
+          }
+
+
+          public async Task<List<TopicViewModel>> GetTopicsByUserIdAsync()
+          {
+               var userIdClaim = _httpContextAccessor.HttpContext?.Items["userId"]?.ToString();
+               return await _topicService.GetTopicsByUserIdAsync(Int32.Parse(userIdClaim));
           }
      }
 }

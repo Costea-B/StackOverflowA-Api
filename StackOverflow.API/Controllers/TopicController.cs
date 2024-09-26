@@ -68,7 +68,7 @@ namespace StackOverflow.API.Controllers
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetTopicsByUserId([FromRoute] int userId)
         {
-            var topics = await _topicService.GetTopicsByUserIdAsync(userId);
+            var topics = await _current.GetTopicsByUserIdAsync();
             if (topics == null || !topics.Any())
             {
                 return NotFound($"No topics found for user with ID {userId}.");
