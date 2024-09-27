@@ -63,13 +63,13 @@ namespace StackOverflow.API.Controllers
              return BadRequest(ModelState);
         }
 
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetTopicsByUserId([FromRoute] int userId)
+        [HttpGet("user/")]
+        public async Task<IActionResult> GetTopicsByUserId()
         {
             var topics = await _current.GetTopicsByUserIdAsync();
             if (topics == null || !topics.Any())
             {
-                return NotFound($"No topics found for user with ID {userId}.");
+                return NotFound($"No topics found for user with ID .");
             }
             return Ok(topics);
         }
