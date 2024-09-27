@@ -10,8 +10,16 @@ namespace Core.Enums
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Job
     {
-        SoftwareEngineer,
-        Racist,
-        Retarded
-    }
+         Student,
+         Teacher,
+         FinanceManager,
+         Engineer,
+         BusinessAnalyst,
+         Nurse,
+         Architect,
+         Writer,
+         Electrician,
+         Accountant,
+         GraphicDesigner
+     }
 }
