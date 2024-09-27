@@ -2,6 +2,7 @@
 using Core.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstractions;
+using Services.Users;
 
 namespace StackOverflow.API.Controllers
 {
@@ -10,10 +11,12 @@ namespace StackOverflow.API.Controllers
     public class ReplyController : ControllerBase
     {
         private readonly IReplyService _replyService;
+        private readonly CurrentUserServices _current;
  
-        public ReplyController(IReplyService replyService)
+        public ReplyController(IReplyService replyService, CurrentUserServices current)
         {
             _replyService = replyService;
+            _current = current;
         }
 
         // Obtine un reply după ID
@@ -30,15 +33,16 @@ namespace StackOverflow.API.Controllers
 
 
         // Creeaza un reply
-        [HttpPost]
-        public async Task<IActionResult> CreateReply([FromBody] CreateReplyRequest request)
+        [HttpPost("{id}")]
+        public async Task<IActionResult> CreateReply([FromRoute] int id, [FromBody] string description)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var newReply = await _replyService.CreateReplyAsync(request);
+            //var newReply = await _replyService.CreateReplyAsync(request);
+            var newReply = await _current.CreateReply(id, description);
             return CreatedAtAction(nameof(GetReplyById), new { id = newReply.Id }, newReply);
         }
 

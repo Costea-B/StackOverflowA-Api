@@ -36,16 +36,15 @@ namespace Services.Topic
             return await _replyRepository.GetAllForTopicAsync(topicId);
         }
 
-        public async Task<ReplyDbTables> UpdateReplyAsync(int replyId, string newDescription)
-        {
-            return await _replyRepository.UpdateAsync(replyId, newDescription);
-        }
-
         public async Task<List<ReplyViewModel>> GetRepliesForTopicAsync(int topicId)
         {
             return await _replyRepository.GetRepliesAsync(topicId);
         }
 
+        public async Task<ReplyDbTables> UpdateReplyAsync(int replyId, string newDescription)
+        {
+            return await _replyRepository.UpdateAsync(replyId, newDescription);
+        }
         public async Task DeleteReplyAsync(int replyId)
         {
             await _replyRepository.DeleteAsync(replyId);

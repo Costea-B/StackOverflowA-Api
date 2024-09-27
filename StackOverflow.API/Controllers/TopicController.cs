@@ -31,8 +31,6 @@ namespace StackOverflow.API.Controllers
             return Ok(topic);
         }
 
-
-        
         [HttpGet]
         public async Task<IActionResult> GetAllTopics()
         {

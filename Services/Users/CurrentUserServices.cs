@@ -17,12 +17,14 @@ namespace Services.Users
           private readonly IHttpContextAccessor _httpContextAccessor;
           private readonly IUserRepository _userRepository;
           private readonly ITopicService _topicService;
+          private readonly IReplyService _replyService;
 
-          public CurrentUserServices(IHttpContextAccessor httpContextAccessor, IUserRepository repository, ITopicService topic)
+          public CurrentUserServices(IHttpContextAccessor httpContextAccessor, IUserRepository repository, ITopicService topic, IReplyService replyService)
           {
                _httpContextAccessor = httpContextAccessor;
                _userRepository = repository;
                _topicService = topic;
+               _replyService = replyService;
           }
 
 
@@ -45,6 +47,12 @@ namespace Services.Users
           {
                var userIdClaim = _httpContextAccessor.HttpContext?.Items["userId"]?.ToString();
                return await _topicService.GetTopicsByUserIdAsync(Int32.Parse(userIdClaim));
+          }
+
+          public async Task<ReplyViewModel> CreateReply(int topicId, string description)
+          {
+               var userIdClaim = _httpContextAccessor.HttpContext?.Items["userId"]?.ToString();
+               return await _replyService.CreateReplyAsync(new CreateReplyRequest(Int32.Parse(userIdClaim), description, topicId));
           }
      }
 }
