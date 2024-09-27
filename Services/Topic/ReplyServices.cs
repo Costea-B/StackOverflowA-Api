@@ -15,15 +15,11 @@ namespace Services.Topic
         {
             _replyRepository = replyRepository;
         }
-        public async Task<ReplyViewModel> CreateReplyAsync(CreateReplyRequest reply)
+        public async Task CreateReplyAsync(CreateReplyRequest reply)
         {
             var newReply = new ReplyDbTables(reply.AuthorId, reply.Description, reply.TopicId);
 
             await _replyRepository.CreateAsync(newReply);
-
-            var replyViewModel = await _replyRepository.GetByIdAsync(newReply.Id);
-
-            return replyViewModel;
         }
 
         public async Task<ReplyViewModel> GetReplyByIdAsync(int id)

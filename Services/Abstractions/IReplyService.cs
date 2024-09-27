@@ -12,7 +12,7 @@ namespace Services.Abstractions
 {
     public interface IReplyService
     {
-        Task<ReplyViewModel> CreateReplyAsync(CreateReplyRequest request);
+        Task CreateReplyAsync(CreateReplyRequest request);
         Task<ReplyViewModel> GetReplyByIdAsync(int id);
         Task<List<ReplyViewModel>> GetRepliesForToticAsync(int topicId);
         Task<ReplyDbTables> UpdateReplyAsync(int replyId, string newDescription);

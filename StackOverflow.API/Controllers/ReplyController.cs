@@ -42,8 +42,8 @@ namespace StackOverflow.API.Controllers
             }
 
             //var newReply = await _replyService.CreateReplyAsync(request);
-            var newReply = await _current.CreateReply(id, description);
-            return CreatedAtAction(nameof(GetReplyById), new { id = newReply.Id }, newReply);
+             await _current.CreateReply(id, description);
+             return Ok();
         }
 
         // Obtine toate reply-urile pentru un anumit topic

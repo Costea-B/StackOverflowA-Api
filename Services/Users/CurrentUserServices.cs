@@ -49,10 +49,10 @@ namespace Services.Users
                return await _topicService.GetTopicsByUserIdAsync(Int32.Parse(userIdClaim));
           }
 
-          public async Task<ReplyViewModel> CreateReply(int topicId, string description)
+          public async Task CreateReply(int topicId, string description)
           {
                var userIdClaim = _httpContextAccessor.HttpContext?.Items["userId"]?.ToString();
-               return await _replyService.CreateReplyAsync(new CreateReplyRequest(Int32.Parse(userIdClaim), description, topicId));
+               await _replyService.CreateReplyAsync(new CreateReplyRequest(Int32.Parse(userIdClaim), description, topicId));
           }
      }
 }
