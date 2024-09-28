@@ -32,6 +32,20 @@ namespace Services.Users
                return userLogin;
           }
 
+          public async Task ChangeUserData(UserModel user, string hashPassword, string password)
+          {
+               var resul = _passwordHash.Verify(password: password, hashPassword);
+               if (resul)
+               {
+                    user.Password = _passwordHash.Generate(user.Password);
+                    await _usersRepository.ChangeUserData(user);
+               }
+               else
+               {
+                    throw new Exception("Invalid password");
+               }
+          }
+
           public async Task<string> Login(UserLoginRequest user)
           {
                var users = await _usersRepository.LoginUsers(user);

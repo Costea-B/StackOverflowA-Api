@@ -43,7 +43,8 @@ namespace DataBase.Repositories
                 Description = topic.Description,
                 Tags = topic.Tags,
                 User = new UserViewModel(topic.User.Id, topic.User.Email, topic.User.Name),
-                Replies = topic.Replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.TopicId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Topic.Title)).ToList()
+                Replies = topic.Replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.TopicId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Topic.Title))
+                     .ToList()
             };
 
             return topicViewModel;

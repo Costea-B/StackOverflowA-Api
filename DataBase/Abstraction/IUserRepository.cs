@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Models;
+using Core.DbModels;
 
 namespace DataBase.Abstraction
 {
@@ -15,5 +16,8 @@ namespace DataBase.Abstraction
           Task<UserModel> LoginUsers(UserLoginRequest  user);
 
           Task<UserViewModel> GetUser(int id);
+          Task<UsersDbTables> GetDataForUserChange(ChangeUserDataViewModel user);
+
+          Task ChangeUserData(UserModel user);
      }
 }

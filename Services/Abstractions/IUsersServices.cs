@@ -8,5 +8,6 @@ namespace Services.Abstractions
      {
           Task<string> Login(UserLoginRequest users);
           Task<UserRegRequest> Register(UserRegRequest user);
+          Task ChangeUserData(UserModel user, string hashPassword, string password);
      }
 }

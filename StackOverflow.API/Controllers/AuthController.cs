@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Core.Models;
 using Core.Models.Requests;
+using Core.ViewModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -61,6 +62,14 @@ namespace StackOverflow.API.Controllers
             var response = await _usersService.Register(user);
 
             return Ok(response);
+       }
+
+       [HttpPut("changeData")]
+          [AllowAnonymous]
+       public async Task<IActionResult> ChangeUserData([FromBody] UpdateUserViewModel user)
+       {
+            await _current.ChangeUserData(user.Email, user.Name,user.CurrentPassword, user.NewPassword);
+            return Ok();
        }
      }
 }

@@ -44,5 +44,31 @@ namespace DataBase.Repositories
                var user =  await _dbContext.UserDbTables.FirstOrDefaultAsync(u => u.Id == id);
                return new UserViewModel(user.Id, user.Email, user.Name);
           }
+
+          public async Task<UsersDbTables> GetDataForUserChange(ChangeUserDataViewModel user)
+          {
+               var users = await _dbContext.UserDbTables.FirstOrDefaultAsync(u => u.Id == user.Id);
+               if (users == null)
+               {
+                    throw new Exception("Pasol Nahui");
+               }
+               return users;
+          }
+
+          public async Task ChangeUserData(UserModel user)
+          {
+               var users = await _dbContext.UserDbTables.FirstOrDefaultAsync(u => u.Id == user.Id);
+               if (users != null)
+               {
+                    users.Name = user.Name;
+                    users.Email = user.Email;
+                    users.Password = user.Password;
+                    await _dbContext.SaveChangesAsync();
+               }
+               else
+               {
+                    throw new Exception("nu ma zaibi");
+               }
+          }
      }
 }
