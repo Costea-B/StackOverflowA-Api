@@ -39,7 +39,7 @@ namespace Services.Users
                var token = new JwtSecurityToken(
                     claims:claims,
                     signingCredentials:signingCredentials,
-                    expires: DateTime.UtcNow.AddMinutes(30)
+                    expires: DateTime.UtcNow.AddHours(48)
                     );
 
                var takenValue = new JwtSecurityTokenHandler().WriteToken(token);
