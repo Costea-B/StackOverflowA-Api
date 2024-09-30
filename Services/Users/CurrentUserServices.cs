@@ -41,7 +41,7 @@ namespace Services.Users
           public async Task<int> CreateTopic(CreateTopicRequest request)
           {
                var userIdClaim = _httpContextAccessor.HttpContext?.Items["userId"]?.ToString();
-               var topicId = await _topicService.CreateTopicAsync(request, 1);
+               var topicId = await _topicService.CreateTopicAsync(request, Int32.Parse(userIdClaim));
                return topicId;
           }
 
@@ -55,7 +55,7 @@ namespace Services.Users
           public async Task CreateReply(int topicId, string description)
           {
                var userIdClaim = _httpContextAccessor.HttpContext?.Items["userId"]?.ToString();
-               await _replyService.CreateReplyAsync(new CreateReplyRequest(1, description, topicId));
+               await _replyService.CreateReplyAsync(new CreateReplyRequest(Int32.Parse(userIdClaim), description, topicId));
           }
 
           public async Task ChangeUserData(string email, string name, string currentPassword, string newPassword)

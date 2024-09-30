@@ -97,8 +97,8 @@ namespace StackOverflow.API.Controllers
             }
         }
 
-        [HttpPost("{replyId}/rating")]
-        public async Task<IActionResult> SubmitRating(int replyId, [FromBody] int rating)
+        [HttpPost("rating")]
+        public async Task<IActionResult> SubmitRating([FromQuery]int replyId, [FromBody] int rating)
         {
             try
             {
