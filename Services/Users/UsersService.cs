@@ -32,13 +32,16 @@ namespace Services.Users
                return userLogin;
           }
 
-          public async Task ChangeUserData(UserModel user, string hashPassword, string password)
+          public async Task ChangeUserData(ChangeUserDataViewModel user)
           {
-               var resul = _passwordHash.Verify(password: password, hashPassword);
+
+               var currentUser = await _usersRepository.GetDataForUserChange(user.Id);
+
+               var resul = _passwordHash.Verify(password: user.CurrentPassword, currentUser.Password );
                if (resul)
                {
-                    user.Password = _passwordHash.Generate(user.Password);
-                    await _usersRepository.ChangeUserData(user);
+                    user.NewPassword = _passwordHash.Generate(user.NewPassword);
+                    await _usersRepository.ChangeUserData(new UserModel(user.Id, user.Name, user.Email, user.NewPassword));
                }
                else
                {

@@ -28,8 +28,7 @@ namespace DataBase.Repositories
              //  await _context.Database.MigrateAsync();
                var topic = await _context.TopicDbTables
                 .Include(t => t.User)
-                .Include(t => t.Replies)
-                    .ThenInclude(r => r.Author)
+                
                 .FirstOrDefaultAsync(t => t.Id == id);
 
             if (topic == null)
@@ -43,8 +42,6 @@ namespace DataBase.Repositories
                 Description = topic.Description,
                 Tags = topic.Tags,
                 User = new UserViewModel(topic.User.Id, topic.User.Email, topic.User.Name),
-                Replies = topic.Replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.TopicId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Topic.Title))
-                     .ToList()
             };
 
             return topicViewModel;
@@ -87,8 +84,6 @@ namespace DataBase.Repositories
         {
             var topics = await _context.TopicDbTables
                 .Include(t => t.User)
-                .Include(t => t.Replies)
-                    .ThenInclude(r => r.Author)
                 .Where(t => t.UserId == userId)
                 .ToListAsync();
 
@@ -103,7 +98,6 @@ namespace DataBase.Repositories
                 Description = topic.Description,
                 Tags = topic.Tags,
                 User = new UserViewModel(topic.User.Id, topic.User.Email, topic.User.Name),
-                Replies = topic.Replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.TopicId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Topic.Title)).ToList()
             }).ToList();
 
             return topicViewModel;
@@ -122,7 +116,6 @@ namespace DataBase.Repositories
                     Description = topic.Description,
                     Tags = topic.Tags,
                     User = new UserViewModel(topic.User.Id, topic.User.Email, topic.User.Name),
-                    Replies = topic.Replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.TopicId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Topic.Title)).ToList()
                }).ToList();
 
                return topicViewModel;

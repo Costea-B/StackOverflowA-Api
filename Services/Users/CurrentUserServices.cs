@@ -41,7 +41,7 @@ namespace Services.Users
           public async Task<int> CreateTopic(CreateTopicRequest request)
           {
                var userIdClaim = _httpContextAccessor.HttpContext?.Items["userId"]?.ToString();
-               var topicId = await _topicService.CreateTopicAsync(request, Int32.Parse(userIdClaim));
+               var topicId = await _topicService.CreateTopicAsync(request, 1);
                return topicId;
           }
 
@@ -55,16 +55,17 @@ namespace Services.Users
           public async Task CreateReply(int topicId, string description)
           {
                var userIdClaim = _httpContextAccessor.HttpContext?.Items["userId"]?.ToString();
-               await _replyService.CreateReplyAsync(new CreateReplyRequest(Int32.Parse(userIdClaim), description, topicId));
+               await _replyService.CreateReplyAsync(new CreateReplyRequest(1, description, topicId));
           }
 
           public async Task ChangeUserData(string email, string name, string currentPassword, string newPassword)
           {
                var userIdClaim = _httpContextAccessor.HttpContext?.Items["userId"]?.ToString();
-              var user = await _userRepository.GetDataForUserChange(new ChangeUserDataViewModel(Int32.Parse(userIdClaim), name,
+               
+              await _usersService.ChangeUserData(new ChangeUserDataViewModel(Int32.Parse(userIdClaim), name,
                     email, currentPassword, newPassword));
 
-              await _usersService.ChangeUserData(new UserModel(user.Id, name, email, newPassword), user.Password, currentPassword);
+             // await _usersService.ChangeUserData(new UserModel(user.Id, name, email, newPassword), user.Password, currentPassword);
           }
      }
 }

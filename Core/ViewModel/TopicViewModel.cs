@@ -16,7 +16,6 @@ namespace Core.ViewModel
         public DateTime Datacreate { get; set; }
         public IList<string> Tags { get; set; }
         public UserViewModel User { get; set; }
-        public List<ReplyViewModel> Replies { get; set; }
      }
 }
 

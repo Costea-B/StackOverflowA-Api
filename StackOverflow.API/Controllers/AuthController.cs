@@ -65,7 +65,6 @@ namespace StackOverflow.API.Controllers
        }
 
        [HttpPut("changeData")]
-          [AllowAnonymous]
        public async Task<IActionResult> ChangeUserData([FromBody] UpdateUserViewModel user)
        {
             await _current.ChangeUserData(user.Email, user.Name,user.CurrentPassword, user.NewPassword);

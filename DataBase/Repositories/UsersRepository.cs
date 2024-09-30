@@ -45,9 +45,9 @@ namespace DataBase.Repositories
                return new UserViewModel(user.Id, user.Email, user.Name);
           }
 
-          public async Task<UsersDbTables> GetDataForUserChange(ChangeUserDataViewModel user)
+          public async Task<UsersDbTables> GetDataForUserChange(int id)
           {
-               var users = await _dbContext.UserDbTables.FirstOrDefaultAsync(u => u.Id == user.Id);
+               var users = await _dbContext.UserDbTables.FirstOrDefaultAsync(u => u.Id == id);
                if (users == null)
                {
                     throw new Exception("Pasol Nahui");

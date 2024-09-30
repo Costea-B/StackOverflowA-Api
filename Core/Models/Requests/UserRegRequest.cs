@@ -22,9 +22,9 @@ namespace Core.Models.Requests
         {
             var results = new List<ValidationResult>();
             
-            if (!InputValidator.IsEmailValid(Email)) results.Add(new ValidationResult("Invalid email address"));
+          //  if (!InputValidator.IsEmailValid(Email)) results.Add(new ValidationResult("Invalid email address"));
 
-            if (!InputValidator.IsPasswordValid(Password)) results.Add(new ValidationResult("Invalid password"));
+           // if (!InputValidator.IsPasswordValid(Password)) results.Add(new ValidationResult("Invalid password"));
 
             return results;
         }

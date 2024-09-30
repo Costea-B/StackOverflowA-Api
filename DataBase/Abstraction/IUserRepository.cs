@@ -16,7 +16,7 @@ namespace DataBase.Abstraction
           Task<UserModel> LoginUsers(UserLoginRequest  user);
 
           Task<UserViewModel> GetUser(int id);
-          Task<UsersDbTables> GetDataForUserChange(ChangeUserDataViewModel user);
+          Task<UsersDbTables> GetDataForUserChange(int id);
 
           Task ChangeUserData(UserModel user);
      }
