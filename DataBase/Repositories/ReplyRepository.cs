@@ -49,10 +49,9 @@ namespace DataBase.Repositories
         {
             var replies = await _context.ReplyDbTables
                 .Include(r => r.Author)
-                .Include(r => r.Topic)
                 .Where(r => r.TopicId == topicId)
                 .ToListAsync();
-            var replyViewModels = replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.TopicId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Topic.Title)).ToList();
+            var replyViewModels = replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Ratings)).ToList();
             return replyViewModels;
         }
 
@@ -67,7 +66,7 @@ namespace DataBase.Repositories
             {
                 throw new Exception($"Reply with ID {id} not found.");
             }
-            var replyViewModel = new ReplyViewModel(reply.Id, reply.AuthorId,reply.TopicId, reply.Description, reply.CreatedAt, reply.Author?.Name ?? "Unknown Author", reply.Topic.Title);
+            var replyViewModel = new ReplyViewModel(reply.Id, reply.AuthorId, reply.Description, reply.CreatedAt, reply.Author?.Name ?? "Unknown Author", reply.Ratings);
             return replyViewModel;
         }
 
@@ -75,10 +74,9 @@ namespace DataBase.Repositories
         {
             var replies = await _context.ReplyDbTables
                 .Include(r => r.Author)
-                .Include(r => r.Topic)
                 .Where(r => r.TopicId == topicId)
                 .ToListAsync();
-            var replyViewModels = replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.TopicId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Topic.Title)).ToList();
+            var replyViewModels = replies.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Ratings)).ToList();
 
             return replyViewModels;
         }
@@ -124,10 +122,9 @@ namespace DataBase.Repositories
         {
             var reply = await _context.ReplyDbTables
                 .Include(r => r.Author)
-                .Include(r => r.Topic)
                 .Where(r => r.AuthorId == userId)
                 .ToListAsync();
-            var replyViewModels = reply.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.TopicId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Topic.Title)).ToList();
+            var replyViewModels = reply.Select(r => new ReplyViewModel(r.Id, r.AuthorId, r.Description, r.CreatedAt, r.Author?.Name ?? "Unknown Author", r.Ratings)).ToList();
             return replyViewModels;
         }
     }

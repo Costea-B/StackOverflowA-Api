@@ -11,23 +11,30 @@ namespace Core.ViewModel
 {
     public class ReplyViewModel
     {
-        public ReplyViewModel(int id, int? authorId,int? topicId, string description, DateTime createdAt, string author, string topic) 
+        public ReplyViewModel(int id, int? authorId, string description, DateTime createdAt, string author, List<int> ratings) 
         {
             Id = id;
             AuthorId = authorId;
-            TopicId = topicId;
             Description = description;
             CreatedAt = createdAt;
             AuthorName = author;
-            TopicName = topic;
+            if (ratings != null && ratings.Count != 0)
+            {
+                 Ratings = Math.Round((decimal)ratings.Sum() / ratings.Count, 1);
+               }
+            else
+            {
+                Ratings = 0; 
+            }
+            
         }
 
         public int Id { get; set; }
         public int? AuthorId { get; set; }
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; } 
-        public int? TopicId { get; set; }
         public string AuthorName { get; set; }
-        public string TopicName { get; set; }
-    }
+        public decimal Ratings { get; set; }
+
+     }
 }
